@@ -7,6 +7,7 @@ import Home from './pages/Home.js';
 
 import './css/App.css';
 import './css/Components.css';
+import './css/Cube.scss';
 
 function App() {
   return (

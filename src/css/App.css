@@ -2,6 +2,12 @@
   outline-style: none;
 }
 
+:root {
+  --cube-size: 150px;
+  --cube-scale: 1;
+  --cube-multiplier: 1.4;
+}
+
 body {
   background-color: pink;
 }

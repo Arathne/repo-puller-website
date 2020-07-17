@@ -1,8 +1,11 @@
 /* cube */
 .scene {
   display: inline-block;
-  --cube-size: 150px;
+  /*--cube-size: 150px;
+  --cube-scale: 0.5;
+  --cube-multiplier: 1.4;*/
 
+  transform: scale(var(--cube-scale));
   width: var(--cube-size);
   height: var(--cube-size);
   perspective: 600px;
@@ -88,7 +91,7 @@
 
 /* hover */
 .scene:hover {
-  transform: scale(1.5);
+  transform: scale(calc( var(--cube-scale) * var(--cube-multiplier) ));
   transition: transform 0.5s;
 }
 
