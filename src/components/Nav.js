@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Cube from './Cube.js';
 //import {NavLink} from 'react-router-dom';
-
 function Nav() {
-  console.log(`width: ${window.innerWidth}`);
-  console.log(`height: ${window.innerHeight}`);
-  console.log(`scale: ${window.innerHeight/1080}`);
-  document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/1080}` );
+  const MIN_SIZE = 550;
+
+  function handleResize() {
+    if( window.innerHeight >= MIN_SIZE )
+      document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/1080}` );
+  }
+
+  useEffect( () => {
+    window.addEventListener('resize', handleResize);
+  })
+
+  handleResize();
 
   return (
     <div className='nav-root'>
