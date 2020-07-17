@@ -5,8 +5,8 @@ import Cube from './Cube.js';
 function Nav() {
   console.log(`width: ${window.innerWidth}`);
   console.log(`height: ${window.innerHeight}`);
-  console.log(`height: ${window.innerHeight/window.innerWidth}`);
-  document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/window.innerWidth}` );
+  console.log(`scale: ${window.innerWidth/1920}`);
+  document.documentElement.style.setProperty('--cube-scale', `${window.innerWidth/1920}` );
 
   return (
     <div className='nav-root'>
