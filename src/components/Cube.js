@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
-import Styles from '../css/Cube.scss';
+import React from 'react';
+import'../css/Cube.scss';
 
 function Cube() {
-  const [angle, setAngle] = useState(10);
-
   return(
-    <div className='scene' activeClassName='scene-active'>
+    <div className='scene'>
       <div className='cube-face cube-inner-circle'>
         <img src={'/img/gear.png'} className="cube-inner-static-logo" alt="logo" />
       </div>
