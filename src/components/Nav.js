@@ -1,10 +1,12 @@
 import React from 'react';
+import Cube from './Cube.js';
 //import {NavLink} from 'react-router-dom';
 
 function Nav() {
   return (
-    <div>
-
+    <div className='nav-root'>
+      <Cube />
+      <Cube />
     </div>
   );
 }

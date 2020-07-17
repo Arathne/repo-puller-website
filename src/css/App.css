@@ -7,28 +7,12 @@ body {
 }
 
 .App {
-  background-color: blue;
+  display: flex;
+  align-items: center;
+
+  background-color: black;
   overflow-y: visible;
   height: 1000px;
   margin-left: 20%;
   margin-right: 20%;
-}
-
-.App-2 {
-  background-color: yellow;
-  height: 870px;
-  margin: 0 5% 5% 5%;
-  padding-top: 5px;
-}
-
-.App-3 {
-  margin: 30px 8% 0 8%;
-  padding: 0;
-}
-
-h1 {
-  font-size: 1.75em;
-  margin: 0;
-  padding: 0;
-  text-align: center;
 }
