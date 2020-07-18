@@ -9,16 +9,18 @@ function Nav() {
   const MIN_SIZE = 550;
 
   function handleResize() {
-    setSlideAmount(Math.floor(window.innerWidth/300));
+    const newSlideAmount = Math.floor(window.innerWidth/300);
+    if( newSlideAmount !== slideAmount )
+      setSlideAmount(newSlideAmount);
+
     if( window.innerHeight >= MIN_SIZE )
       document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/1080}` );
 
     document.documentElement.style.setProperty('--nav-slider-width', `${slideAmount*300}px` );
-    console.log( slideAmount );
   }
 
   useEffect( () => {
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('onresize', handleResize);
     handleResize();
   })
 

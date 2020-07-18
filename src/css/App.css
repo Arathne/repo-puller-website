@@ -16,7 +16,7 @@ body {
 
 .App {
   display: block;
-
+  width: 100%;
   background-color: black;
   overflow-y: visible;
   height: 1000px;
