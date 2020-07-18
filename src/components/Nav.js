@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
 import Cube from './Cube.js';
+import Slider from 'react-slick';
+
 //import {NavLink} from 'react-router-dom';
 function Nav() {
   const MIN_SIZE = 550;
@@ -17,8 +19,27 @@ function Nav() {
 
   return (
     <div className='nav-root'>
-      <Cube />
-      <Cube />
+      <Slider
+        speed={500}
+        centerMode={true}
+        infinite={false}
+        className='nav-slider'
+
+        arrows={false}
+        slidesPerRow={5}
+        centerMode={true}
+        centerPadding={0}
+        slidesToShow={1}
+        slidesToScroll={1}
+      >
+        <Cube />
+        <Cube />
+        <Cube />
+        <Cube />
+        <Cube />
+        <Cube />
+      </Slider>
+
     </div>
   );
 }
