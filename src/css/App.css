@@ -3,9 +3,10 @@
 }
 
 :root {
-  --cube-size: 150px;
+  --cube-size: 110px;
   --cube-scale: 1;
-  --cube-multiplier: 1.4;
+  --cube-multiplier: 1.5;
+  --cube-margin-horizontal: 50px;
 
   --nav-slider-width: 1500px;
 }

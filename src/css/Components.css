@@ -5,6 +5,8 @@
 }
 
 .nav-slider {
+  text-align: center;
+
   margin: auto;
   background-color: green;
   width: var(--nav-slider-width);

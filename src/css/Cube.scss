@@ -1,16 +1,12 @@
 /* cube */
 .scene {
   display: inline-block;
-  /*--cube-size: 150px;
-  --cube-scale: 0.5;
-  --cube-multiplier: 1.4;*/
-
   transform: scale(var(--cube-scale));
   width: var(--cube-size);
   height: var(--cube-size);
   perspective: 600px;
-  padding: 60px;
-  margin: 10px;
+  padding: 20px 50px 20px 50px;
+  margin: 10px var(--cube-margin-horizontal) 0 var(--cube-margin-horizontal);
   transition: transform 0.5s;
 }
 

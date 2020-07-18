@@ -13,14 +13,18 @@ function Nav() {
     if( newSlideAmount !== slideAmount )
       setSlideAmount(newSlideAmount);
 
-    if( window.innerHeight >= MIN_SIZE )
-      document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/1080}` );
+    /*if( window.innerHeight >= MIN_SIZE )
+      document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/1080}` );*/
 
     document.documentElement.style.setProperty('--nav-slider-width', `${slideAmount*300}px` );
+
+    const margin = ((window.innerWidth - (slideAmount+1)*220)/(slideAmount+1))/2;
+    if( margin >= 0 )
+      document.documentElement.style.setProperty('--cube-margin-horizontal', `${margin}px` );
   }
 
   useEffect( () => {
-    window.addEventListener('onresize', handleResize);
+    window.addEventListener('resize', handleResize);
     handleResize();
   })
 
@@ -32,11 +36,12 @@ function Nav() {
         infinite={false}
         className='nav-slider'
 
+        adjustHeight={true}
         arrows={false}
         slidesPerRow={slideAmount}
         centerMode={true}
         centerPadding={0}
-        slidesToShow={1}
+
         slidesToScroll={1}
       >
         <Cube />
