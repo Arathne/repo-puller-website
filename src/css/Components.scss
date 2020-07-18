@@ -1,12 +1,13 @@
 .nav-root {
   background-color: blue;
   margin: auto;
-  display: inline-block;
+  display: block;
 }
 
 .nav-slider {
-  width: 1500px;
+  margin: auto;
   background-color: green;
+  width: var(--nav-slider-width);
   white-space: nowrap;
   scroll-behavior: smooth;
 }

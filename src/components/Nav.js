@@ -1,21 +1,26 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Cube from './Cube.js';
 import Slider from 'react-slick';
 
+
 //import {NavLink} from 'react-router-dom';
 function Nav() {
+  const [slideAmount, setSlideAmount] = useState(Math.floor(window.innerWidth/300));
   const MIN_SIZE = 550;
 
   function handleResize() {
+    setSlideAmount(Math.floor(window.innerWidth/300));
     if( window.innerHeight >= MIN_SIZE )
       document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/1080}` );
+
+    document.documentElement.style.setProperty('--nav-slider-width', `${slideAmount*300}px` );
+    console.log( slideAmount );
   }
 
   useEffect( () => {
     window.addEventListener('resize', handleResize);
+    handleResize();
   })
-
-  handleResize();
 
   return (
     <div className='nav-root'>
@@ -26,7 +31,7 @@ function Nav() {
         className='nav-slider'
 
         arrows={false}
-        slidesPerRow={5}
+        slidesPerRow={slideAmount}
         centerMode={true}
         centerPadding={0}
         slidesToShow={1}
@@ -39,7 +44,6 @@ function Nav() {
         <Cube />
         <Cube />
       </Slider>
-
     </div>
   );
 }
