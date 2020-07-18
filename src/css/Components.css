@@ -1,5 +1,4 @@
 .nav-root {
-  background-color: blue;
   margin: auto;
   display: block;
 }
@@ -7,7 +6,6 @@
 .nav-slider {
   text-align: center;
   margin: auto;
-  background-color: black;
   width: var(--nav-slider-width);
   white-space: nowrap;
   scroll-behavior: smooth;

@@ -13,13 +13,29 @@
 }
 
 body {
-  background-color: pink;
+  background-color: black;
 }
 
-.App {
+.app {
   display: block;
   width: 100%;
   background-color: black;
   overflow-y: visible;
   height: 1000px;
+  text-align: center;
+}
+
+.app-nav-trim {
+  display: inline-block;
+  opacity: 0.5;
+  background-color: white;
+  background-image: radial-gradient(circle, #00d4ff 0%, rgb(0, 100, 200) 100%);
+  height: 3px;
+  width: 90%;
+  border-radius: 30%;
+  animation: pulse 20s linear infinite;
+}
+
+@keyframes pulse {
+  100% { filter: hue-rotate(-360deg); }
 }

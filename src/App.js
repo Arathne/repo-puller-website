@@ -14,8 +14,9 @@ import "slick-carousel/slick/slick-theme.css";
 function App() {
   return (
     <Router>
-      <div className='App'>
+      <div className='app'>
         <Nav />
+        <div className='app-nav-trim'></div>
         <Switch>
           <Route path='/' exact component={Home} />
         </Switch>

@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Cube from './Cube.js';
 import Slider from 'react-slick';
+import {NavLink} from 'react-router-dom';
 
-
-//import {NavLink} from 'react-router-dom';
 function Nav() {
   const [slideAmount, setSlideAmount] = useState(Math.floor(window.innerWidth/300));
   const MIN_SIZE = 550;
@@ -48,18 +47,18 @@ function Nav() {
         className='nav-slider'
 
         adjustHeight={true}
-        arrows={false}
+        arrows={true}
         slidesPerRow={slideAmount}
         centerPadding={0}
         dots={true}
         slidesToScroll={1}
       >
-        <Cube />
-        <Cube />
-        <Cube />
-        <Cube />
-        <Cube />
-        <Cube />
+        <NavLink to='/link1' activeClassName='nav-active' exact> <Cube /> </NavLink>
+        <NavLink to='/link2' activeClassName='nav-active' exact> <Cube /> </NavLink>
+        <NavLink to='/link3' activeClassName='nav-active' exact> <Cube /> </NavLink>
+        <NavLink to='/link4' activeClassName='nav-active' exact> <Cube /> </NavLink>
+        <NavLink to='/link5' activeClassName='nav-active' exact> <Cube /> </NavLink>
+        <NavLink to='/link6' activeClassName='nav-active' exact> <Cube /> </NavLink>
       </Slider>
     </div>
   );
@@ -67,7 +66,7 @@ function Nav() {
 
 /* <nav>
   <ul className='nav-root'>
-    <li> <NavLink to='/' activeClassName='nav-active' exact> Home </NavLink> </li>
+    <NavLink to='/' activeClassName='nav-active' exact> Home </NavLink> </li>
     <li> <NavLink to='/grand-exchange'  activeClassName='nav-active' exact> Grand Exchange </NavLink> </li>
     <li> <NavLink to='/trend' activeClassName='nav-active' exact> Trend </NavLink> </li>
   </ul>
