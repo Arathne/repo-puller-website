@@ -13,8 +13,10 @@ function Nav() {
     if( newSlideAmount !== slideAmount )
       setSlideAmount(newSlideAmount);
 
-    if( window.innerHeight >= MIN_SIZE )
+    if( window.innerHeight >= MIN_SIZE ) {
       document.documentElement.style.setProperty('--cube-size', `${110*(window.innerHeight/1080)}px` );
+      document.documentElement.style.setProperty('--cube-padding-vertical', `${60*(window.innerHeight/1080)}px` );
+    }
 
     document.documentElement.style.setProperty('--nav-slider-width', `${slideAmount*300}px` );
 
@@ -26,7 +28,15 @@ function Nav() {
   useEffect( () => {
     window.addEventListener('resize', handleResize);
     handleResize();
-    document.documentElement.style.setProperty('--cube-size', `${110*(window.innerHeight/1080)}px` );
+
+    if( window.innerHeight >= MIN_SIZE ) {
+      document.documentElement.style.setProperty('--cube-size', `${110*(window.innerHeight/1080)}px` );
+      document.documentElement.style.setProperty('--cube-padding-vertical', `${60*(window.innerHeight/1080)}px` );
+    }
+    else {
+      document.documentElement.style.setProperty('--cube-size', `${110*(550/1080)}px` );
+      document.documentElement.style.setProperty('--cube-padding-vertical', `${60*(550/1080)}px` );
+    }
   })
 
   return (
@@ -40,9 +50,8 @@ function Nav() {
         adjustHeight={true}
         arrows={false}
         slidesPerRow={slideAmount}
-        centerMode={true}
         centerPadding={0}
-
+        dots={true}
         slidesToScroll={1}
       >
         <Cube />
