@@ -13,8 +13,8 @@ function Nav() {
     if( newSlideAmount !== slideAmount )
       setSlideAmount(newSlideAmount);
 
-    /*if( window.innerHeight >= MIN_SIZE )
-      document.documentElement.style.setProperty('--cube-scale', `${window.innerHeight/1080}` );*/
+    if( window.innerHeight >= MIN_SIZE )
+      document.documentElement.style.setProperty('--cube-size', `${110*(window.innerHeight/1080)}px` );
 
     document.documentElement.style.setProperty('--nav-slider-width', `${slideAmount*300}px` );
 
@@ -26,6 +26,7 @@ function Nav() {
   useEffect( () => {
     window.addEventListener('resize', handleResize);
     handleResize();
+    document.documentElement.style.setProperty('--cube-size', `${110*(window.innerHeight/1080)}px` );
   })
 
   return (
