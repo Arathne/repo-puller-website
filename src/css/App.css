@@ -1,3 +1,13 @@
+@font-face {
+  font-family: Arcade;
+  src: url('/fonts/webpixelbitmap_regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: Terminal;
+  src: url('/fonts/DOS.ttf');
+}
+
 * {
   outline-style: none;
 }
@@ -36,12 +46,11 @@
   position: relative;
   width: 85%;
   height: 100%;
-  background-color: white;
   margin: 5px auto 5px auto;
 }
 
 .app-content-page {
-  background-color: yellow;
+  /*background-color: yellow;*/
   width: 65%;
   height: 100%;
 }
@@ -51,7 +60,16 @@ body {
 }
 
 h1 {
+  font-family: Arcade;
+  font-size: 3.2em;
+  color: white;
+}
+
+h2 {
+  font-family: Terminal;
+  font-size: 1.65em;
   color: green;
+  filter: brightness(2);
 }
 
 @keyframes pulse {
