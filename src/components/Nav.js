@@ -43,7 +43,7 @@ function Nav() {
       <Slider
         speed={500}
         centerMode={true}
-        infinite={false}
+        infinite={true}
         className='nav-slider'
 
         adjustHeight={true}

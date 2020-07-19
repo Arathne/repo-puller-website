@@ -18,3 +18,7 @@
 .slick-prev {
   left: 0;
 }
+
+.slick-arrow {
+  z-index: 1;
+}
