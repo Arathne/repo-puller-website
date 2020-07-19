@@ -1,3 +1,12 @@
+/* INDEX:
+ *   Navigation Bar
+ *   Slick React
+ *   Terminal
+ *   Screen Resize
+*/
+
+
+/* Navigation Bar */
 .nav-root {
   margin: auto;
   display: block;
@@ -11,6 +20,8 @@
   scroll-behavior: smooth;
 }
 
+
+/* Slick React */
 .slick-next {
   right: 0;
 }
@@ -21,4 +32,36 @@
 
 .slick-arrow {
   z-index: 1;
+}
+
+
+/* Terminal */
+.terminal {
+  float: right;
+  width: 35%;
+  height: 100%;
+  background-color: green;
+}
+
+
+/* Screen Resize */
+/* 3 Cubes */
+@media only screen and (max-width: 1200px) {
+  .terminal {
+    width: 45%;
+  }
+  .app-content-page {
+    width: 55%;
+  }
+}
+
+/* 2 Cubes */
+@media only screen and (max-width: 900px) {
+  .terminal {
+    display: none;
+  }
+  .app-content-page {
+    background-color: red;
+    width: 100%;
+  }
 }

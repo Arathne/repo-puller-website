@@ -12,16 +12,12 @@
   --nav-slider-width: 1500px;
 }
 
-body {
-  background-color: black;
-}
-
 .app {
   display: block;
   width: 100%;
   background-color: black;
   overflow-y: visible;
-  height: 1000px;
+  height: 70vh;
   text-align: center;
 }
 
@@ -34,6 +30,28 @@ body {
   width: 90%;
   border-radius: 30%;
   animation: pulse 20s linear infinite;
+}
+
+.app-content {
+  position: relative;
+  width: 85%;
+  height: 100%;
+  background-color: white;
+  margin: 5px auto 5px auto;
+}
+
+.app-content-page {
+  background-color: yellow;
+  width: 65%;
+  height: 100%;
+}
+
+body {
+  background-color: black;
+}
+
+h1 {
+  color: green;
 }
 
 @keyframes pulse {

@@ -53,7 +53,7 @@ function Nav() {
         dots={true}
         slidesToScroll={1}
       >
-        <NavLink to='/link1' activeClassName='nav-active' exact> <Cube /> </NavLink>
+        <NavLink to='/' activeClassName='nav-active' exact> <Cube /> </NavLink>
         <NavLink to='/link2' activeClassName='nav-active' exact> <Cube /> </NavLink>
         <NavLink to='/link3' activeClassName='nav-active' exact> <Cube /> </NavLink>
         <NavLink to='/link4' activeClassName='nav-active' exact> <Cube /> </NavLink>
@@ -63,13 +63,5 @@ function Nav() {
     </div>
   );
 }
-
-/* <nav>
-  <ul className='nav-root'>
-    <NavLink to='/' activeClassName='nav-active' exact> Home </NavLink> </li>
-    <li> <NavLink to='/grand-exchange'  activeClassName='nav-active' exact> Grand Exchange </NavLink> </li>
-    <li> <NavLink to='/trend' activeClassName='nav-active' exact> Trend </NavLink> </li>
-  </ul>
-</nav> */
 
 export default Nav;
