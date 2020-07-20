@@ -56,7 +56,7 @@
 }
 
 .scanlines {
-  background: repeating-linear-gradient(transparent, transparent 2px, black 3px, black 3px);
+  background: repeating-linear-gradient(transparent, transparent 1px, black 2px, black 2px);
   pointer-events: none;
   position: absolute;
   height: 100%;
