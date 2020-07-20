@@ -8,6 +8,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 import App from './App';
 
+
+/*  defaults
+*/
 ReactDOM.render(
   <React.StrictMode>
     <App />

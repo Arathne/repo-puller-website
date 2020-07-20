@@ -5,36 +5,22 @@ import React, {useState, useEffect, useRef} from 'react';
 const sleep = (milliseconds) => {return new Promise(resolve => setTimeout(resolve, milliseconds))};
 
 function Terminal() {
-  const [text, setText] = useState('');
+  const [currentLine, setCurrentLine] = useState(''); // this is always the bottom which allows auto scrolling
   const [logBuffer, setLogBuffer] = useState([]);
   const bottomRef = useRef(null);
-  const typeDelay = 0;
-  let logContent = [''];
+  const delay = 60; // delay in ms
+  let logContent = ['']; // solves asynchronous issue w/ hooks
 
 
-  /* adds characters to log in sequential order order w/ delay
-   * NOTE: function must be waited on with 'await' or logs may be out of order
-   * PARAM:
-   *      line       string
+  /* updates currentLine and buffer w/ auto scrolling
   */
-  async function lineAnimation( line ) {
-    let i;
-    let output = '';
+  async function log( line ) {
+    setCurrentLine( line );
+    await sleep( delay );
 
-    for( i = 0; i < line.length; i++ ) {
-      output += line.charAt(i);
-      setText( output );
-      await sleep( typeDelay );
-    }
-
-    logContent.push( output );
-  }
-
-  /* runs 'animation' and updates the log buffer
-  */
-  async function log( input ) {
-    await lineAnimation( input );
+    logContent.push( line );
     setLogBuffer( logContent );
+
     bottomRef.current.scrollIntoView({behavior: 'smooth'});
   }
 
@@ -102,7 +88,7 @@ function Terminal() {
     return (
       <div>
         {logBuffer.map( (name, index) => {
-          return name != '' ? (<h2 key={index}> {name} </h2>) : (<br></br>);
+          return name !== '' ? (<h2 key={index}> {name} </h2>) : (<br></br>);
         })}
       </div>
     );
@@ -115,7 +101,7 @@ function Terminal() {
     <div className='terminal'>
       <div className='terminal-output'>
         <LogDiv />
-        <h2 ref={bottomRef}> {text} </h2>
+        <h2 ref={bottomRef}> {currentLine} </h2>
       </div>
     </div>
   );

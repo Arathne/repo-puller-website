@@ -10,6 +10,9 @@ import './css/Pages.css';
 import './css/Components.css';
 import './css/Cube.scss';
 
+
+/*  renders basic layout of page and routes to the corresponding urls
+*/
 function App() {
   return (
     <Router>
