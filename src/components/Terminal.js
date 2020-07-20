@@ -34,7 +34,7 @@ function Terminal() {
         data.push(line);
       });
 
-      for (var i = 0; i < data.length; i++)
+      for (var i = 0; i < data.length; i++) // print startup info
         await log( data[i] );
     }
 
