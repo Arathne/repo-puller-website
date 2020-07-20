@@ -3,7 +3,6 @@
  *   Slick React
  *   Terminal
  *   Screen Resize
- *   Animations
 */
 
 
@@ -53,7 +52,7 @@
   min-height: 50px;
 }
 
-.terminal-output div {
+.terminal-output div  {
   overflow: auto;
   display: inline-block;
   vertical-align: top;
