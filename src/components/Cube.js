@@ -1,3 +1,5 @@
+/* constructs a 3D cube that rotates */
+
 import React from 'react';
 
 function Cube() {

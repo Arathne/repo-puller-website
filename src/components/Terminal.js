@@ -1,3 +1,4 @@
+/* terminal that displays log activity */
 /* the main challenge with this is that react is asynchronous */
 
 import React, {useState, useEffect, useRef} from 'react';
@@ -7,7 +8,7 @@ function Terminal() {
   const [text, setText] = useState('');
   const [logBuffer, setLogBuffer] = useState([]);
   const bottomRef = useRef(null);
-  const typeDelay = 2;
+  const typeDelay = 0;
   let logContent = [''];
 
 
@@ -59,26 +60,36 @@ function Terminal() {
       await log("Detecting Secondary Slave  ... TOSHIBA CD-ROM 6202D");
       await log("CMOS Battery Failed");
       await log("");
-      await log("a");
-      await log("b");
-      await log("c");
-      await log("d");
-      await log("e");
-      await log("f");
-      await log("g");
-      await log("h");
-      await log("i");
-      await log("g");
-      await log("k");
-      await log("l");
-      await log("m");
-      await log("n");
-      await log("o");
-      await log("p");
-      await log("q");
-      await log("r");
-      await log("s");
-
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
+      await log("Edgar Torrez");
+      await log("Potato aaskdkasd");
+      await log("Josh White");
     }
 
     effectAsync();
@@ -96,6 +107,7 @@ function Terminal() {
       </div>
     );
   }
+
 
   /* render
   */

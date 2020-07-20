@@ -1,3 +1,5 @@
+/*  navigation bar that controls slider and creates instances of 3D cubes */
+
 import React, {useState, useEffect} from 'react';
 import Cube from './Cube.js';
 import Slider from 'react-slick';
@@ -7,6 +9,9 @@ function Nav() {
   const [slideAmount, setSlideAmount] = useState(Math.floor(window.innerWidth/300));
   const MIN_SIZE = 550;
 
+
+  /*  actions taken when window is resized
+  */
   function handleResize() {
     const newSlideAmount = Math.floor(window.innerWidth/300);
     if( newSlideAmount !== slideAmount )
@@ -24,6 +29,9 @@ function Nav() {
       document.documentElement.style.setProperty('--cube-margin-horizontal', `${margin}px` );
   }
 
+
+  /* runs on start and sets up resize events
+  */
   useEffect( () => {
     window.addEventListener('resize', handleResize);
     handleResize();
@@ -38,6 +46,9 @@ function Nav() {
     }
   })
 
+
+  /*  render
+  */
   return (
     <div className='nav-root'>
       <Slider
