@@ -6,6 +6,10 @@ import Terminal from './components/Terminal.js';
 
 import Home from './pages/Home.js';
 import Students from './pages/Students.js';
+import Archive from './pages/Archive.js';
+import Options from './pages/Options.js';
+import Readme from './pages/Readme.js';
+
 
 import './css/App.css';
 import './css/Pages.css';
@@ -27,6 +31,9 @@ function App() {
             <Switch>
               <Route path='/' exact component={Home} />
               <Route path='/students' exact component={Students} />
+              <Route path='/archive' exact component={Archive} />
+              <Route path='/options' exact component={Options} />
+              <Route path='/readme' exact component={Readme} />
             </Switch>
           </div>
         </div>

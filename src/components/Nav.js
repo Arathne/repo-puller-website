@@ -66,10 +66,9 @@ function Nav() {
       >
         <NavLink to='/' activeClassName='nav-active' exact> <Cube /> </NavLink>
         <NavLink to='/students' exact> <Cube /> </NavLink>
-        <NavLink to='/link3' exact> <Cube /> </NavLink>
-        <NavLink to='/link4' exact> <Cube /> </NavLink>
-        <NavLink to='/link5' exact> <Cube /> </NavLink>
-        <NavLink to='/link6' exact> <Cube /> </NavLink>
+        <NavLink to='/archive' exact> <Cube /> </NavLink>
+        <NavLink to='/options' exact> <Cube /> </NavLink>
+        <NavLink to='/readme' exact> <Cube /> </NavLink>
       </Slider>
     </div>
   );
