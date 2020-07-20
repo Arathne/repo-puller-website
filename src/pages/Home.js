@@ -1,12 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 function Home() {
+  const [buttonDisplay, setButtonDisplay] = useState('inline-block');
+
   const handleSubmit = (event) => {
     event.preventDefault();
   }
 
   function buttonPressed() {
     console.log( "button pressed" );
+    setButtonDisplay('none');
   }
 
   return(
@@ -33,8 +36,9 @@ function Home() {
         </div>
 
         <h3> Set Timer </h3>
-        <button onClick={buttonPressed} className='button'> SEND REQUEST </button>
-
+        <div>
+          <button onClick={buttonPressed} className='button' style={{display: buttonDisplay}}> SEND REQUEST </button>
+        </div>
       </form>
     </div>
   );

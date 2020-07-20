@@ -124,9 +124,13 @@ h3 {
   display: block;
   text-align: center;
   border: none;
-  width: 100%;
+
   font-family: Arcade;
   font-size: 2.5em;
+}
+
+.button:hover {
+  opacity: 0.5;
 }
 
 @keyframes pulse {
