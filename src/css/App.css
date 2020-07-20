@@ -55,6 +55,16 @@
   height: 100%;
 }
 
+.scanlines {
+  background: repeating-linear-gradient(transparent, transparent 2px, black 3px, black 3px);
+  pointer-events: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+}
+
 body {
   background-color: black;
 }
@@ -73,6 +83,8 @@ h2 {
   color: green;
   filter: brightness(2);
 }
+
+
 
 @keyframes pulse {
   100% { filter: hue-rotate(-360deg); }
