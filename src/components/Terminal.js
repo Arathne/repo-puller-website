@@ -8,7 +8,7 @@ function Terminal() {
   const [currentLine, setCurrentLine] = useState(''); // this is always the bottom which allows auto scrolling
   const [logBuffer, setLogBuffer] = useState([]);
   const bottomRef = useRef(null);
-  const delay = 60; // delay in ms
+  const delay = 15; // delay in ms
   let logContent = ['']; // solves asynchronous issue w/ hooks
 
 
@@ -16,12 +16,11 @@ function Terminal() {
   */
   async function log( line ) {
     setCurrentLine( line );
-    await sleep( delay );
-
     logContent.push( line );
     setLogBuffer( logContent );
 
     bottomRef.current.scrollIntoView({behavior: 'smooth'});
+    await sleep( delay );
   }
 
 
