@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 function Home() {
   const [buttonDisplay, setButtonDisplay] = useState('inline-block');
@@ -43,13 +43,5 @@ function Home() {
     </div>
   );
 }
-
-/*
-<h3> Domain: github.iu.edu </h3>
-<h3> Api: 12345************ </h3>
-<h3> Repo: csci24000_spring2020_A1 </h3>
-<h3> Zip: a1.zip </h3>
-<h3> Set Timer </h3>
-*/
 
 export default Home;

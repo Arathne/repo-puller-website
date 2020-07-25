@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+
+const logger = require('../modules/logger.js');
 
 function Students() {
+
+  useEffect( () => {
+    logger.append('Students');
+  }, [] );
+
   return(
     <div className='students-page'>
       <h1> Students </h1>

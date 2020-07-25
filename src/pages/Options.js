@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+
+const logger = require('../modules/logger.js');
 
 function Options() {
+
+  useEffect( () => {
+    logger.append('Options');
+  }, [] );
+
   return(
     <div className='options-page'>
       <h1> Options </h1>
