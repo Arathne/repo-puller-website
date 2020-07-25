@@ -1,11 +1,15 @@
 import React, {useEffect} from 'react';
-
-const logger = require('../modules/logger.js');
+const Log = require('../modules/logger.js');
 
 function Students() {
 
   useEffect( () => {
-    
+    async function initialMessage() {
+      await Log.append('');
+      await Log.append('Students...');
+    }
+
+    initialMessage();
   }, [] );
 
   return(

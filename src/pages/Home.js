@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 const Log = require('../modules/logger.js')
 
 function Home() {
@@ -10,16 +10,20 @@ function Home() {
 
   async function buttonPressed() {
     await Log.append('');
-    await Log.append('b');
-    await Log.append('c');
-    await Log.append('d');
-    await Log.append('e');
-    await Log.append('f');
-    await Log.append('g');
+    await Log.append('Sending Request...');
 
 
     setButtonDisplay('none');
   }
+
+  useEffect( () => {
+    async function initialMessage() {
+      await Log.append('');
+      await Log.append('Home...');
+    }
+
+    initialMessage();
+  }, [] );
 
   return(
     <div className='home-page'>
