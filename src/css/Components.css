@@ -15,7 +15,7 @@
 .nav-slider {
   text-align: center;
   margin: auto;
-  width: var(--nav-slider-width);
+  width: 95%;
   white-space: nowrap;
   scroll-behavior: smooth;
 }

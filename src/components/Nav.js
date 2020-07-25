@@ -21,12 +21,6 @@ function Nav() {
       document.documentElement.style.setProperty('--cube-size', `${110*(window.innerHeight/1080)}px` );
       document.documentElement.style.setProperty('--cube-padding-vertical', `${60*(window.innerHeight/1080)}px` );
     }
-
-    document.documentElement.style.setProperty('--nav-slider-width', `${slideAmount*300}px` );
-
-    const margin = ((window.innerWidth - (slideAmount+1)*220)/(slideAmount+1))/2;
-    if( margin >= 0 )
-      document.documentElement.style.setProperty('--cube-margin-horizontal', `${margin}px` );
   }
 
 
