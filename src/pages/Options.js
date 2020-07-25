@@ -5,7 +5,7 @@ const logger = require('../modules/logger.js');
 function Options() {
 
   useEffect( () => {
-    logger.append('Options');
+    
   }, [] );
 
   return(

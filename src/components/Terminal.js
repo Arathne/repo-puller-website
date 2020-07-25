@@ -23,6 +23,7 @@ function Terminal() {
     setLogBuffer( logContent );
 
     bottomRef.current.scrollIntoView({behavior: 'smooth'});
+
     await sleep( delay );
   }
 
@@ -30,9 +31,8 @@ function Terminal() {
   /* runs after log has been updated
   */
   function logEvent() {
-    log( Logger.last() );
+    log( Logger.getLast() );
   }
-
 
   /* runs on start
   */
@@ -48,11 +48,10 @@ function Terminal() {
 
       for (var i = 0; i < data.length; i++) // print startup info
         await log( data[i] );
-
-      window.addEventListener('logger', logEvent);
     }
 
     effectAsync();
+    window.addEventListener('logger', logEvent);
   }, [])
 
 

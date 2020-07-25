@@ -5,7 +5,7 @@ const logger = require('../modules/logger.js');
 function Students() {
 
   useEffect( () => {
-    logger.append('Students');
+    
   }, [] );
 
   return(

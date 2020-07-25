@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+const Log = require('../modules/logger.js')
 
 function Home() {
   const [buttonDisplay, setButtonDisplay] = useState('inline-block');
@@ -7,8 +8,16 @@ function Home() {
     event.preventDefault();
   }
 
-  function buttonPressed() {
-    console.log( "button pressed" );
+  async function buttonPressed() {
+    await Log.append('');
+    await Log.append('b');
+    await Log.append('c');
+    await Log.append('d');
+    await Log.append('e');
+    await Log.append('f');
+    await Log.append('g');
+
+
     setButtonDisplay('none');
   }
 
