@@ -16,7 +16,7 @@ function fetchData(route) {
 }
 
 function getTop10() {
-  return fetchData('/api/top10');
+  return fetchData('/time');
 }
 
 module.exports = {
