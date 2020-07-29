@@ -25,14 +25,20 @@ function Students() {
   const RenderStudents = () => {
     return (
       <div className='student-group'>
-        {json.map( (name, index) => {
-          return (
-            <div key={index}>
-              <input type='text' placeholder={name.firstName} name='firstName' className='text-field' />
-              <input type='text' placeholder={name.lastName} name='lastName' className='text-field' />
-              <input type='text' placeholder={name.userid} name='userid' className='text-field' />
-            </div>
-          );
+        {json.map( (object, index) => {
+
+          return(
+            <div key={`student-${index}`} className='student-group-div'>
+              <h3> {object.class} </h3>
+              {object.students.map( (student, s_index) => {
+                return (
+                  <div key={`student-${index}-${s_index}`}>
+                    <input type='text' placeholder={student.firstName} name='firstName' className='text-field' />
+                    <input type='text' placeholder={student.lastName} name='lastName' className='text-field' />
+                    <input type='text' placeholder={student.userid} name='userid' className='text-field' />
+                  </div>
+                )})}
+            </div>)
         })}
       </div>
     )
