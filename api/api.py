@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 import requests
 import time
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="../build", static_url_path='/')
 
 
 ## SECRET KEY FOR FLASK SESSION
@@ -26,6 +26,11 @@ class Students (db.Model):
         data += '\"firstName\": \"%s\",' % self.first
         data += '\"lastName\": \"%s\"' % self.last
         return '{ %s }' % data
+
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 
 @app.route('/api/students')
