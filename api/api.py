@@ -21,7 +21,20 @@ class Students (db.Model):
     first = db.Column(db.String(40), nullable=False)
     last = db.Column(db.String(40), nullable=False)
 
+    def toJSON (self):
+        data = '\"userid\": \"%s\",' % self.userid
+        data += '\"firstName\": \"%s\",' % self.first
+        data += '\"lastName\": \"%s\"' % self.last
+        return '{ %s }' % data
 
-@app.route('/time')
+
+@app.route('/api/students')
 def get_current_time():
-  return {'time': time.time()}
+    students = Students.query.all()
+    studentsJSON = ''
+    for i in range(len(students)):
+        studentsJSON += students[i].toJSON()
+        if i < len(students)-1:
+            studentsJSON += ', '
+
+    return '[ %s ]' % studentsJSON

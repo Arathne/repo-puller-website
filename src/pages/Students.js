@@ -3,7 +3,11 @@ const Log = require('../modules/logger.js');
 const Api = require('../modules/api.js');
 
 function Students() {
-  const [currentTime, setCurrentTime] = useState(0);
+  const [json, setJson] = useState([]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+  }
 
   useEffect( () => {
     async function initialMessage() {
@@ -11,18 +15,35 @@ function Students() {
       await Log.append('Students...');
     }
 
-    Api.getTop10().then( data => {
-      setCurrentTime( data.time );
-      console.log( data );
+    Api.getStudents().then( data => {
+      setJson( data );
     } );
 
     initialMessage();
   }, [] );
 
+  const RenderStudents = () => {
+    return (
+      <div className='student-group'>
+        {json.map( (name, index) => {
+          return (
+            <div key={index}>
+              <input type='text' placeholder={name.firstName} name='firstName' className='text-field' />
+              <input type='text' placeholder={name.lastName} name='lastName' className='text-field' />
+              <input type='text' placeholder={name.userid} name='userid' className='text-field' />
+            </div>
+          );
+        })}
+      </div>
+    )
+  }
+
   return(
     <div className='students-page'>
       <h1> Students </h1>
-      <h1> Price Rises {currentTime} </h1>
+      <form onSubmit={handleSubmit}>
+        <RenderStudents />
+      </form>
     </div>
   );
 }

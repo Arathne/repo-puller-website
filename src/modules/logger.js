@@ -1,8 +1,6 @@
 /* log does not keep track of terminal startup text */
 
 const logEvent = new Event('logger');
-const sleep = (milliseconds) => { return new Promise(resolve => setTimeout(resolve, milliseconds)) };
-
 let log = [''];
 
 

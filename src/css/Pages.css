@@ -1,1 +1,10 @@
+.student-group {
+  margin: 13px 0 0 0;
+  white-space: normal;
+}
 
+.student-group input {
+  text-align: center;
+  width: 31.3%;
+  margin: 0;
+}

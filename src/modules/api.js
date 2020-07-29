@@ -3,8 +3,8 @@
 /* example:
  * const Api = require('../libs/api.js');
  *
- * Api.getTime().then( data => {
- *  setCurrentTime( data.time );
+ * Api.getStudents().then( data => {
+ *  console.log(data)
  * });
 */
 
@@ -15,10 +15,10 @@ function fetchData(route) {
   });
 }
 
-function getTop10() {
-  return fetchData('/time');
+function getStudents() {
+  return fetchData('/api/students');
 }
 
 module.exports = {
-  getTop10
+  getStudents
 };
