@@ -5,10 +5,15 @@
 
 .student-group input {
   text-align: center;
+  color: #aaa;
   width: 31.3%;
   margin: 0;
 }
 
 .student-group-div {
   margin-bottom: 30px;
+}
+
+.active-student {
+  background-color: #111;
 }

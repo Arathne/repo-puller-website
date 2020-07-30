@@ -60,9 +60,4 @@ def classes_to_json():
         if i < len(classesList) - 1:
             studentJSON += ', '
 
-
-    #print('[ %s ]' % studentJSON)
-    #class1 = Classes.query.filter_by(name='240').first()
-    #studentList = Students.query.filter_by(classroom=class1).all()
-
     return '[ %s ]' % studentJSON
