@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 const Log = require('../modules/logger.js');
+const Api = require('../modules/api.js');
 
 function Student( props ) {
   const [firstName, setFirstName] = useState('');
@@ -23,7 +24,12 @@ function Student( props ) {
     await Log.append(`OLD:  ${firstName}, ${lastName}, ${userid}`);
     await Log.append(`NEW:  ${newFirstName}, ${newLastName}, ${newUserid}`);
 
-    /* send json */
+    Api.updateStudent( userid, newUserid, newFirstName, newLastName ).then( json => {
+      if( json.success )
+        console.log("updated student")
+      else
+        console.log("failed updating student")
+    })
 
     /* if successful -- update */
     setFirstName( newFirstName );
@@ -37,9 +43,9 @@ function Student( props ) {
   return(
     <form onSubmit={handleSubmit} className='student-form'>
       <div className={css}>
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={firstName} name='firstName' className='text-field' />
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={lastName} name='lastName' className='text-field' />
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={userid} name='userid' className='text-field' />
+        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={firstName} placeholder='first name' name='firstName' className='text-field' />
+        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={lastName} placeholder='last name' name='lastName' className='text-field' />
+        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={userid} placeholder='username' name='userid' className='text-field' />
         <button type="submit"></button>
       </div>
     </form>

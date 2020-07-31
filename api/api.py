@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 import requests
 import time
+import json
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 
@@ -50,7 +51,7 @@ def index():
     return app.send_static_file('index.html')
 
 
-@app.route('/api/students')
+@app.route('/api/students/all', methods = ['GET'])
 def classes_to_json():
     studentJSON = ''
     classesList = Classes.query.all()
@@ -61,3 +62,10 @@ def classes_to_json():
             studentJSON += ', '
 
     return '[ %s ]' % studentJSON
+
+
+@app.route('/api/students/update', methods = ['POST'])
+def update_student():
+    student = request.json
+    print(student['firstname'])
+    return '{ \"success\": %s }' % "false"
