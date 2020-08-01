@@ -7,7 +7,14 @@
   margin-bottom: 20px;
 }
 
-.student-group input {
+.class-field {
+  background-color: transparent;
+  text-align: center;
+  color: yellow;
+  margin: 0;
+}
+
+.student-group input:not(.class-field) {
   text-align: center;
   color: #aaa;
   width: 31.3%;
@@ -24,4 +31,15 @@
 
 .active-student {
   background-color: #111;
+}
+
+.student-class {}
+
+.student-class-buttons {
+  display: inline-block;
+  margin: 0 0 10px 0;
+}
+
+.student-class-buttons button {
+  margin: 0 10px 0 10px;
 }

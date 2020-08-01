@@ -47,9 +47,11 @@ def students_to_json (studentList):
     return '[ %s ]' % studentsJSON
 
 
+
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
 
 
 @app.route('/api/students/all', methods = ['GET'])
@@ -65,27 +67,52 @@ def classes_to_json():
     return '[ %s ]' % studentJSON
 
 
+
 @app.route('/api/students/update', methods = ['POST'])
 def update_student():
     status = "false"
-    message = "updated student"
+    message = "student updated successfully"
     student = request.json
 
     studentClass = Classes.query.filter_by( classid=student['class'] ).first()
-
-    if student['userid'] != student['old_userid']:
-        Students.query.filter_by( userid=student['old_userid'] ).delete() # delete old entry and create a new one
-        db.session.add( Students( userid=student['userid'], first=student['firstname'], last=student['lastname'], classroom=studentClass ))
-        db.session.commit()
-        status = "true"
-    else:
-        query = Students.query.filter_by( userid=student['userid'] ).first() # find existing entry and update it
-        if query != None:
-            query.first = student['firstname']
-            query.last = student['lastname']
+    try:
+        if student['userid'] != student['old_userid']:
+            Students.query.filter_by( userid=student['old_userid'] ).delete() # delete old entry and create a new one
+            db.session.add( Students( userid=student['userid'], first=student['firstname'], last=student['lastname'], classroom=studentClass ))
             db.session.commit()
             status = "true"
         else:
-            message = "student not found"
+            query = Students.query.filter_by( userid=student['userid'] ).first() # find existing entry and update it
+            if query != None:
+                query.first = student['firstname']
+                query.last = student['lastname']
+                db.session.commit()
+                status = "true"
+            else:
+                message = "student not found"
+    except:
+        message = "something went wrong"
 
     return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message)
+
+
+
+@app.route('/api/class/update', methods = ['POST'])
+def update_class():
+    classInfo = request.json
+    message = ""
+    status = "false"
+
+    try:
+        query = Classes.query.filter_by( classid=classInfo['classid'] ).first()
+        if query != None:
+            query.name = classInfo['classname']
+            db.session.commit()
+            status = "true"
+            message = "successfully updated class name"
+        else:
+            message = "class not found"
+    except:
+        message = "something went wrong"
+
+    return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message);

@@ -88,6 +88,16 @@ h3 {
   display: inline-block;
 }
 
+button {
+  font-family: Arcade;
+  font-size: 3.2em;
+  color: green;
+  filter: brightness(2);
+  border: none;
+  background-color: transparent;
+  pointer-events: all;
+}
+
 .form {
   margin: 30px 0 30px 0;
   display: block;
@@ -107,6 +117,10 @@ h3 {
   border: none;
   text-align: left;
   margin-left: 3%;
+}
+
+.text-field:focus {
+  filter: brightness(2);
 }
 
 .text-field-div h3 {

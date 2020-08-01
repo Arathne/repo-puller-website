@@ -23,6 +23,7 @@ function Student( props ) {
     await Log.append('');
     await Log.append(`OLD:  ${firstName}, ${lastName}, ${userid}`);
     await Log.append(`NEW:  ${newFirstName}, ${newLastName}, ${newUserid}`);
+    await Log.append('');
 
     Api.updateStudent( userid, newUserid, newFirstName, newLastName, props.ClassID ).then( json => {
       if( json.success ) {
@@ -30,6 +31,7 @@ function Student( props ) {
         setLastName( newLastName );
         setUserid( newUserid );
       }
+      Log.append( json.message );
     })
   }
 
