@@ -25,7 +25,7 @@ function Class( props ) {
       await Log.append( "no change in class name detected" );
   }}
 
-  const addStudent = () => {
+  const handleAdd = () => {
     let newStudent = {
       userid: "userid",
       firstName: "first",
@@ -37,11 +37,23 @@ function Class( props ) {
     setStudents( temp );
   }
 
+  const handleRefresh = () => {
+
+  }
+
   useEffect( () => {
     setClassID( props.json.classid );
     setClassName( props.json.class );
     setStudents( props.json.students );
   }, [] );
+
+  const StudentEditor = () => {
+    return ( students.map( (student, index) => {
+      return (
+        <Student FirstName={student.firstName} LastName={student.lastName} UserID={student.userid} ClassID={classID} key={`student-${index}`} />
+      )
+    }))
+  }
 
   return (
     <div className="student-class">
@@ -50,16 +62,12 @@ function Class( props ) {
       </form>
 
       <div className="student-class-buttons">
-        <button onClick={addStudent}> + </button>
-        <button onClick={addStudent}> - </button>
+        <button onClick={handleAdd}> + </button>
+        <button onClick={handleRefresh}> o </button>
       </div>
 
-      {/* iterates through each student and displays them */}
-      {students.map( (student, index) => {
-        return (
-          <Student FirstName={student.firstName} LastName={student.lastName} UserID={student.userid} ClassID={classID} key={`student-${index}`} />
-        )
-      })}
+      <StudentEditor />
+
     </div>
   );
 }

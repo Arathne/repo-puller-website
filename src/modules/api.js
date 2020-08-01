@@ -53,8 +53,14 @@ function updateClass( classid, className ) {
   return callApiPost('/api/class/update', classObj)
 }
 
+function deleteStudent( userid ) {
+  const student = { userid: userid }
+  return callApiPost('/api/students/delete', student);
+}
+
 module.exports = {
   getStudents,
   updateStudent,
+  deleteStudent,
   updateClass
 };

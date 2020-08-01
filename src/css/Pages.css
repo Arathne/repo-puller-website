@@ -14,7 +14,7 @@
   margin: 0;
 }
 
-.student-group input:not(.class-field) {
+.student-group input:not(.class-field), .student-group h3 {
   text-align: center;
   color: #aaa;
   width: 31.3%;
@@ -36,10 +36,28 @@
 .student-class {}
 
 .student-class-buttons {
-  display: inline-block;
   margin: 0 0 10px 0;
 }
 
 .student-class-buttons button {
   margin: 0 10px 0 10px;
+}
+
+.student-form {
+  position: relative;
+}
+
+.student-button-remove {
+  position: absolute;
+  top: -7px;
+  left: 0px;
+  color: red;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.display-none {
+  display: none;
 }

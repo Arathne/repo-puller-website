@@ -96,6 +96,17 @@ def update_student():
     return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message)
 
 
+@app.route('/api/students/delete', methods = ['POST'])
+def delete_student():
+    status = "true"
+    message = "successfully removed student"
+    student = request.json
+
+    Students.query.filter_by( userid=student['userid'] ).delete()
+    db.session.commit();
+    return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message);
+
+
 
 @app.route('/api/class/update', methods = ['POST'])
 def update_class():

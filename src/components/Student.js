@@ -6,7 +6,8 @@ function Student( props ) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userid, setUserid] = useState('');
-  const [css, setCss] = useState('');
+  const [cssBackground, setCssBackground] = useState('');
+  const [display, setDisplay] = useState('');
 
   useEffect( ()=>{
     setFirstName( props.FirstName )
@@ -35,18 +36,36 @@ function Student( props ) {
     })
   }
 
-  const handleFocus = (event) => { setCss('active-student'); }
-  const handleBlur = (event) => { setCss(''); }
+  const handleRemove = async () => {
+    Api.deleteStudent( userid ).then( json => {
+      if( json.success )
+        setDisplay('display-none');
+
+      Log.append("");
+      Log.append( json.message );
+    });
+  }
+
+  const handleFocus = (event) => {
+    setCssBackground('active-student');
+  }
+
+  const handleBlur = (event) => {
+    setCssBackground('');
+  }
 
   return(
-    <form onSubmit={handleSubmit} className='student-form'>
-      <div className={css}>
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={firstName} name='firstName' className='text-field' />
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={lastName} name='lastName' className='text-field' />
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={userid} name='userid' className='text-field' />
-        <button type="submit"></button>
-      </div>
-    </form>
+    <div className={`student-form ${display}`}>
+      <form onSubmit={handleSubmit}>
+        <div className={cssBackground}>
+          <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={firstName} name='firstName' className='text-field' />
+          <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={lastName} name='lastName' className='text-field' />
+          <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={userid} name='userid' className='text-field' />
+          <button type="submit"></button>
+        </div>
+      </form>
+      <button onClick={handleRemove} className={'student-button-remove'}> - </button>
+    </div>
   );
 }
 
