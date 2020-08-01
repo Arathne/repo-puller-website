@@ -24,17 +24,13 @@ function Student( props ) {
     await Log.append(`OLD:  ${firstName}, ${lastName}, ${userid}`);
     await Log.append(`NEW:  ${newFirstName}, ${newLastName}, ${newUserid}`);
 
-    Api.updateStudent( userid, newUserid, newFirstName, newLastName ).then( json => {
-      if( json.success )
-        console.log("updated student")
-      else
-        console.log("failed updating student")
+    Api.updateStudent( userid, newUserid, newFirstName, newLastName, props.ClassID ).then( json => {
+      if( json.success ) {
+        setFirstName( newFirstName );
+        setLastName( newLastName );
+        setUserid( newUserid );
+      }
     })
-
-    /* if successful -- update */
-    setFirstName( newFirstName );
-    setLastName( newLastName );
-    setUserid( newUserid );
   }
 
   const handleFocus = (event) => { setCss('active-student'); }

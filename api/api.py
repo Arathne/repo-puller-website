@@ -17,6 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+## for later: each name must be unique
 class Classes (db.Model):
     classid = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
@@ -57,7 +58,7 @@ def classes_to_json():
     classesList = Classes.query.all()
     for i in range( len(classesList) ):
         studentList = Students.query.filter_by(classroom=classesList[i]).all()
-        studentJSON += "{ \"class\":\"%s\", \"students\": %s }" % (classesList[i].name, students_to_json(studentList))
+        studentJSON += "{ \"classid\":\"%s\", \"class\":\"%s\", \"students\": %s }" % (classesList[i].classid, classesList[i].name, students_to_json(studentList))
         if i < len(classesList) - 1:
             studentJSON += ', '
 
@@ -66,6 +67,25 @@ def classes_to_json():
 
 @app.route('/api/students/update', methods = ['POST'])
 def update_student():
+    status = "false"
+    message = "updated student"
     student = request.json
-    print(student['firstname'])
-    return '{ \"success\": %s }' % "false"
+
+    studentClass = Classes.query.filter_by( classid=student['class'] ).first()
+
+    if student['userid'] != student['old_userid']:
+        Students.query.filter_by( userid=student['old_userid'] ).delete() # delete old entry and create a new one
+        db.session.add( Students( userid=student['userid'], first=student['firstname'], last=student['lastname'], classroom=studentClass ))
+        db.session.commit()
+        status = "true"
+    else:
+        query = Students.query.filter_by( userid=student['userid'] ).first() # find existing entry and update it
+        if query != None:
+            query.first = student['firstname']
+            query.last = student['lastname']
+            db.session.commit()
+            status = "true"
+        else:
+            message = "student not found"
+
+    return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message)

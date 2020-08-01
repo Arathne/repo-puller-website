@@ -27,12 +27,13 @@ function getStudents() {
   return callApi('/api/students/all');
 }
 
-function updateStudent( oldUserid, newUserid, newFirstName, newLastName ) {
+function updateStudent( oldUserid, newUserid, newFirstName, newLastName, classID ) {
   const student = {
     old_userid: oldUserid,
     userid: newUserid,
     firstname: newFirstName,
-    lastname: newLastName
+    lastname: newLastName,
+    class: classID
   }
 
   let post = defaultPost;
