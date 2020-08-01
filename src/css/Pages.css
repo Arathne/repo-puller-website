@@ -3,6 +3,10 @@
   white-space: normal;
 }
 
+.student-group h3 {
+  margin-bottom: 20px;
+}
+
 .student-group input {
   text-align: center;
   color: #aaa;
@@ -12,6 +16,10 @@
 
 .student-group-div {
   margin-bottom: 30px;
+}
+
+.student-group .slick-prev, .student-group .slick-next {
+  top: 25px;
 }
 
 .active-student {

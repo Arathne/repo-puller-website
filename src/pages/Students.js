@@ -2,6 +2,8 @@
 
 import React, {useEffect, useState} from 'react';
 import Class from '../components/Class.js';
+import Slider from 'react-slick';
+
 const Log = require('../modules/logger.js');
 const Api = require('../modules/api.js');
 
@@ -34,13 +36,14 @@ function Students() {
 
       {/* iterates through an array of objects and then passes object into component */}
       <div className='student-group'>
+        <Slider>
         {json.map( (object, index) => {
           return(
             <div key={`student-${index}`} className='student-group-div'>
               <Class json={object} />
             </div> )
         })}
-
+        </Slider>
       </div>
     </div>
   );

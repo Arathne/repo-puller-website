@@ -17,9 +17,9 @@ function Class( props ) {
       <h3> {className} </h3>
 
       {/* iterates through each student and displays them */}
-      {students.map( (student, s_index) => {
+      {students.map( (student, index) => {
         return (
-          <div key={`student-${s_index}`}>
+          <div key={`student-${index}`}>
             <Student FirstName={student.firstName} LastName={student.lastName} UserID={student.userid} ClassID={classID} />
           </div>
         )

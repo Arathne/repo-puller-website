@@ -39,9 +39,9 @@ function Student( props ) {
   return(
     <form onSubmit={handleSubmit} className='student-form'>
       <div className={css}>
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={firstName} placeholder='first name' name='firstName' className='text-field' />
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={lastName} placeholder='last name' name='lastName' className='text-field' />
-        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={userid} placeholder='username' name='userid' className='text-field' />
+        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={firstName} name='firstName' className='text-field' />
+        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={lastName} name='lastName' className='text-field' />
+        <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={userid} name='userid' className='text-field' />
         <button type="submit"></button>
       </div>
     </form>
