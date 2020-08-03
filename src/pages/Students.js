@@ -42,7 +42,7 @@ function Students() {
 
       {/* iterates through an array of objects and then passes object into component */}
       <div className='student-group'>
-        <Slider infinite={false}>
+        <Slider infinite={false} draggable={false}>
         {json.map( (object, index) => {
           return(
             <div key={`student-${index}`} className='student-group-div'>
