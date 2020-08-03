@@ -17,24 +17,29 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-## for later: each name must be unique
 class Classes (db.Model):
-    classid = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
     student = db.relationship('Students', backref='classroom')
 
 
 class Students (db.Model):
-    userid = db.Column(db.String(40), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(40), nullable=False)
     first = db.Column(db.String(40), nullable=False)
     last = db.Column(db.String(40), nullable=False)
-    classid = db.Column(db.Integer, db.ForeignKey('classes.classid'))
+    classid = db.Column(db.Integer, db.ForeignKey('classes.id'))
 
     def toJSON (self):
-        data = '\"userid\": \"%s\",' % self.userid
+        data = '\"id\": \"%s\",' % self.id
+        data += '\"username\": \"%s\",' % self.username
         data += '\"firstName\": \"%s\",' % self.first
         data += '\"lastName\": \"%s\"' % self.last
         return '{ %s }' % data
+
+
+
+## PRIVATE FUNCTIONS
 
 
 def students_to_json (studentList):
@@ -53,14 +58,15 @@ def index():
     return app.send_static_file('index.html')
 
 
-
+## returns a json file with information of every class
+##
 @app.route('/api/students/all', methods = ['GET'])
 def classes_to_json():
     studentJSON = ''
     classesList = Classes.query.all()
     for i in range( len(classesList) ):
         studentList = Students.query.filter_by(classroom=classesList[i]).all()
-        studentJSON += "{ \"classid\":\"%s\", \"class\":\"%s\", \"students\": %s }" % (classesList[i].classid, classesList[i].name, students_to_json(studentList))
+        studentJSON += "{ \"classid\":\"%s\", \"class\":\"%s\", \"students\": %s }" % (classesList[i].id, classesList[i].name, students_to_json(studentList))
         if i < len(classesList) - 1:
             studentJSON += ', '
 
@@ -68,76 +74,75 @@ def classes_to_json():
 
 
 
+## updates existing student or creates a new one
+##    find student by primary key
+##    if student found
+##       update existing student
+##    else
+##       create new student [all student entries need a class (classid)]
+##
 @app.route('/api/students/update', methods = ['POST'])
 def update_student():
-    status = "false"
-    message = "student updated successfully"
+    success = "false"
+    message = ""
     student = request.json
 
-    studentClass = Classes.query.filter_by( classid=student['class'] ).first()
     try:
-        if student['userid'] != student['old_userid']:
-            Students.query.filter_by( userid=student['old_userid'] ).delete() # delete old entry and create a new one
-            db.session.add( Students( userid=student['userid'], first=student['firstname'], last=student['lastname'], classroom=studentClass ))
+        query = Students.query.filter_by( id=student['id'] ).first()
+        if query != None:
+            query.first = student['firstName']
+            query.last = student['lastName']
+            query.username = student['userName']
             db.session.commit()
-            status = "true"
+            success = "true"
+            message = "update student -- success"
         else:
-            query = Students.query.filter_by( userid=student['userid'] ).first() # find existing entry and update it
-            if query != None:
-                query.first = student['firstname']
-                query.last = student['lastname']
+            currentClass = Classes.query.filter_by(id=student['classid']).first()
+            if currentClass != None:
+                db.session.add( Students(first=student['firstName'], last=student['lastName'], username=student['userName'], classroom=currentClass) )
                 db.session.commit()
-                status = "true"
+                success = "true"
+                message = "new student -- success"
             else:
-                message = "student not found"
+                message = "could not find class -- terminating"
     except:
-        message = "something went wrong"
+        message = "something went wrong!"
 
-    return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message)
+    return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message)
 
 
+
+## deletes student by primary key
+##
 @app.route('/api/students/delete', methods = ['POST'])
 def delete_student():
-    status = "true"
-    message = "successfully removed student"
     student = request.json
-
-    Students.query.filter_by( userid=student['userid'] ).delete()
+    Students.query.filter_by( id=student['id'] ).delete()
     db.session.commit();
-    return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message);
+
+    return '{ \"success\": %s, \"message\": \"%s\" }' % ("true", "eliminate student -- success");
 
 
 
+## updates the class name
+##    searches by primary key
+##
 @app.route('/api/class/update', methods = ['POST'])
 def update_class():
     classInfo = request.json
     message = ""
-    status = "false"
+    success = "false"
 
     try:
-        query = Classes.query.filter_by( classid=classInfo['classid'] ).first()
+        query = Classes.query.filter_by( id=classInfo['classid'] ).first()
         if query != None:
             query.name = classInfo['classname']
             db.session.commit()
-            status = "true"
-            message = "successfully updated class name"
+            success = "true"
+            message = "update class name -- success"
         else:
-            message = "class not found"
+            message = "class not found -- terminating"
     except:
-        message = "something went wrong"
+        message = "something went wrong!"
 
-    return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message);
-
-
-
-@app.route('/api/class/id', methods = ['POST'])
-def get_class():
-    classInfo = request.json
-    currentClass = Classes.query.filter_by(classid=classInfo['classid']).first()
-    students = Students.query.filter_by(classroom=currentClass).all()
-    responseJSON = '{ \"success\": %s, \"message\": \"%s\" }' % ('false', 'something went wrong');
-
-    if currentClass != None:
-        return "{ \"classid\":\"%s\", \"class\":\"%s\", \"students\": %s }" % (currentClass.classid, currentClass.name, students_to_json(students))
-
-    return responseJSON;
+    return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message);

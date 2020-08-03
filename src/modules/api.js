@@ -33,13 +33,13 @@ function getStudents() {
   return callApi('/api/students/all');
 }
 
-function updateStudent( oldUserid, newUserid, newFirstName, newLastName, classID ) {
+function updateStudent( id, classid, newFirstName, newLastName, newUserName ) {
   const student = {
-    old_userid: oldUserid,
-    userid: newUserid,
-    firstname: newFirstName,
-    lastname: newLastName,
-    class: classID
+    id: id,
+    classid: classid,
+    firstName: newFirstName,
+    lastName: newLastName,
+    userName: newUserName
   }
 
   return callApiPost('/api/students/update', student)
@@ -53,8 +53,8 @@ function updateClass( classid, className ) {
   return callApiPost('/api/class/update', classObj)
 }
 
-function deleteStudent( userid ) {
-  const student = { userid: userid }
+function deleteStudent( id ) {
+  const student = { id: id }
   return callApiPost('/api/students/delete', student);
 }
 

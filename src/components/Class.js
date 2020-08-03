@@ -45,7 +45,7 @@ function Class( props ) {
   const Students = () => {
     return ( students.map( (student, index) => {
       return (
-        <Student FirstName={student.firstName} LastName={student.lastName} UserID={student.userid} ClassID={classID} refreshFunc={props.refreshFunc} key={`student-${index}`} />
+        <Student ID={student.id} FirstName={student.firstName} LastName={student.lastName} UserID={student.username} ClassID={classID} refreshFunc={props.refreshFunc} key={`student-${index}`} />
       )
     }))
   }
@@ -62,7 +62,7 @@ function Class( props ) {
       </div>
 
       <Students />
-      {addMode && ( <Student FirstName={'first'} LastName={'last'} UserID={'userid'} ClassID={classID} refreshFunc={props.refreshFunc} new={true} /> )}
+      {addMode && ( <Student ID={-1} FirstName='first' LastName='last' UserID='userid' classID={classID} refreshFunc={props.refreshFunc} new={true} /> )}
     </div>
   );
 }

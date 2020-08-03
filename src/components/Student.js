@@ -3,13 +3,16 @@ const Log = require('../modules/logger.js');
 const Api = require('../modules/api.js');
 
 function Student( props ) {
+  const [id, setId] = useState(0);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userid, setUserid] = useState('');
+
   const [cssBackground, setCssBackground] = useState('');
   const [display, setDisplay] = useState('');
 
   useEffect( ()=>{
+    setId( props.ID )
     setFirstName( props.FirstName )
     setLastName( props.LastName )
     setUserid( props.UserID )
@@ -26,7 +29,7 @@ function Student( props ) {
     await Log.append(`NEW:  ${newFirstName}, ${newLastName}, ${newUserid}`);
     await Log.append('');
 
-    Api.updateStudent( userid, newUserid, newFirstName, newLastName, props.ClassID ).then( json => {
+    Api.updateStudent( id, props.classID, newFirstName, newLastName, newUserid ).then( json => {
       if( json.success ) {
         setFirstName( newFirstName );
         setLastName( newLastName );
@@ -40,7 +43,7 @@ function Student( props ) {
 
   const handleRemove = async () => {
     if( !props.new ) {
-      Api.deleteStudent( userid ).then( json => {
+      Api.deleteStudent( id ).then( json => {
         if( json.success )
           setDisplay('display-none');
 
