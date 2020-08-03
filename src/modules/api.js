@@ -8,6 +8,7 @@
  * });
 */
 
+
 const defaultPost = {
   method:"POST",
   cache:"no-cache",
@@ -17,22 +18,37 @@ const defaultPost = {
   body: JSON.stringify('')
 }
 
-function callApi(route, request) {
+
+/* fetch api at specified route
+ *    compatible with both get and post request methods
+ *       pass in json string for post request
+*/
+function callApi( route, request ) {
   return fetch(route, request).then(res => res.json()).then(data => {
     return data;
   });
 }
 
+
+/* makes managing post request easier
+ *    pass in object and it will do the rest
+*/
 function callApiPost( route, request ) {
   let post = defaultPost;
   post.body = JSON.stringify( request )
   return callApi(route, post)
 }
 
+
+/* all information accessible
+*/
 function getStudents() {
-  return callApi('/api/students/all');
+  return callApi('/api/all');
 }
 
+
+/* updates existing student or creates a new one when necessary
+*/
 function updateStudent( id, classid, newFirstName, newLastName, newUserName ) {
   const student = {
     id: id,
@@ -45,6 +61,9 @@ function updateStudent( id, classid, newFirstName, newLastName, newUserName ) {
   return callApiPost('/api/students/update', student)
 }
 
+
+/* updates class name
+*/
 function updateClass( classid, className ) {
   const classObj = {
     classid: classid,
@@ -53,19 +72,17 @@ function updateClass( classid, className ) {
   return callApiPost('/api/class/update', classObj)
 }
 
+
+/* deletes student
+*/
 function deleteStudent( id ) {
   const student = { id: id }
   return callApiPost('/api/students/delete', student);
 }
 
-function getStudentsByClass( classid ) {
-  const classInfo = { classid: classid }
-  return callApiPost('/api/class/id', classInfo);
-}
 
 module.exports = {
   getStudents,
-  getStudentsByClass,
   updateStudent,
   deleteStudent,
   updateClass

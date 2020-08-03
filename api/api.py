@@ -1,8 +1,5 @@
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
-import requests
-import time
-import json
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 
@@ -41,7 +38,8 @@ class Students (db.Model):
 
 ## PRIVATE FUNCTIONS
 
-
+## converts list of students into json
+##
 def students_to_json (studentList):
     studentsJSON = ''
     for i in range( len(studentList) ):
@@ -53,6 +51,9 @@ def students_to_json (studentList):
 
 
 
+## ROUTING
+
+## default
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
@@ -60,7 +61,7 @@ def index():
 
 ## returns a json file with information of every class
 ##
-@app.route('/api/students/all', methods = ['GET'])
+@app.route('/api/all', methods = ['GET'])
 def classes_to_json():
     studentJSON = ''
     classesList = Classes.query.all()
