@@ -7,6 +7,9 @@ function Class( props ) {
   const [classID, setClassID] = useState('');
   const [className, setClassName] = useState('');
   const [students, setStudents] = useState([]);
+  const [addMode, setAddMode] = useState(false);
+
+  let unofficial = [];
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -26,31 +29,23 @@ function Class( props ) {
   }}
 
   const handleAdd = () => {
-    let newStudent = {
-      userid: "userid",
-      firstName: "first",
-      lastName: "last"
-    };
-
-    let temp = [...students];
-    temp.push( newStudent );
-    setStudents( temp );
+    setAddMode( !addMode )
   }
 
   const handleRefresh = () => {
-
+    props.refreshFunc();
   }
 
   useEffect( () => {
     setClassID( props.json.classid );
     setClassName( props.json.class );
     setStudents( props.json.students );
-  }, [] );
+  }, [props.json] );
 
-  const StudentEditor = () => {
+  const Students = () => {
     return ( students.map( (student, index) => {
       return (
-        <Student FirstName={student.firstName} LastName={student.lastName} UserID={student.userid} ClassID={classID} key={`student-${index}`} />
+        <Student FirstName={student.firstName} LastName={student.lastName} UserID={student.userid} ClassID={classID} refreshFunc={props.refreshFunc} key={`student-${index}`} />
       )
     }))
   }
@@ -66,8 +61,8 @@ function Class( props ) {
         <button onClick={handleRefresh}> o </button>
       </div>
 
-      <StudentEditor />
-
+      <Students />
+      {addMode && ( <Student FirstName={'first'} LastName={'last'} UserID={'userid'} ClassID={classID} refreshFunc={props.refreshFunc} new={true} /> )}
     </div>
   );
 }

@@ -27,6 +27,12 @@ function Students() {
     initialMessage();
   }, [] );
 
+  const refreshA = () => {
+    Api.getStudents().then( data => {
+      const temp = [...data]
+      setJson( temp );
+    } );
+  }
 
   /* render
   */
@@ -40,7 +46,7 @@ function Students() {
         {json.map( (object, index) => {
           return(
             <div key={`student-${index}`} className='student-group-div'>
-              <Class json={object} />
+              <Class json={object} refreshFunc={refreshA} />
             </div> )
         })}
         </Slider>

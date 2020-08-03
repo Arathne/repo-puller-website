@@ -127,3 +127,17 @@ def update_class():
         message = "something went wrong"
 
     return '{ \"success\": %s, \"message\": \"%s\" }' % (status, message);
+
+
+
+@app.route('/api/class/id', methods = ['POST'])
+def get_class():
+    classInfo = request.json
+    currentClass = Classes.query.filter_by(classid=classInfo['classid']).first()
+    students = Students.query.filter_by(classroom=currentClass).all()
+    responseJSON = '{ \"success\": %s, \"message\": \"%s\" }' % ('false', 'something went wrong');
+
+    if currentClass != None:
+        return "{ \"classid\":\"%s\", \"class\":\"%s\", \"students\": %s }" % (currentClass.classid, currentClass.name, students_to_json(students))
+
+    return responseJSON;

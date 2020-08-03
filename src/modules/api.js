@@ -58,8 +58,14 @@ function deleteStudent( userid ) {
   return callApiPost('/api/students/delete', student);
 }
 
+function getStudentsByClass( classid ) {
+  const classInfo = { classid: classid }
+  return callApiPost('/api/class/id', classInfo);
+}
+
 module.exports = {
   getStudents,
+  getStudentsByClass,
   updateStudent,
   deleteStudent,
   updateClass

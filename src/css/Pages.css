@@ -54,6 +54,10 @@
   color: red;
 }
 
+.student-button-remove-new {
+  color: orange;
+}
+
 .display-inline {
   display: inline;
 }

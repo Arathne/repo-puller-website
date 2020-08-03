@@ -31,19 +31,24 @@ function Student( props ) {
         setFirstName( newFirstName );
         setLastName( newLastName );
         setUserid( newUserid );
+
+        props.refreshFunc();
       }
       Log.append( json.message );
     })
   }
 
   const handleRemove = async () => {
-    Api.deleteStudent( userid ).then( json => {
-      if( json.success )
-        setDisplay('display-none');
+    if( !props.new ) {
+      Api.deleteStudent( userid ).then( json => {
+        if( json.success )
+          setDisplay('display-none');
 
-      Log.append("");
-      Log.append( json.message );
-    });
+        Log.append("");
+        Log.append( json.message );
+      });
+      props.refreshFunc();
+    }
   }
 
   const handleFocus = (event) => {
@@ -64,7 +69,7 @@ function Student( props ) {
           <button type="submit"></button>
         </div>
       </form>
-      <button onClick={handleRemove} className={'student-button-remove'}> - </button>
+      <button onClick={handleRemove} className={(props.new) ? ('student-button-remove student-button-remove-new') : ('student-button-remove')}> - </button>
     </div>
   );
 }
