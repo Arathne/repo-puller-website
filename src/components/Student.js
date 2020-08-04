@@ -1,3 +1,5 @@
+/* displays information of student which can be changed */
+
 import React, {useEffect, useState} from 'react';
 const Log = require('../modules/logger.js');
 const Api = require('../modules/api.js');
@@ -6,73 +8,77 @@ function Student( props ) {
   const [id, setId] = useState(0);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userid, setUserid] = useState('');
+  const [userid, setUserID] = useState('');
 
   const [cssBackground, setCssBackground] = useState('');
-  const [display, setDisplay] = useState('');
+  const [cssDisplay, setCssDisplay] = useState('');
 
+
+  /* runs on start
+  */
   useEffect( ()=>{
     setId( props.ID )
     setFirstName( props.FirstName )
     setLastName( props.LastName )
-    setUserid( props.UserID )
+    setUserID( props.UserID )
   }, [])
 
-  const handleSubmit = async (event) => {
+
+  /* update student
+  */
+  const handleUpdate = async (event) => {
     event.preventDefault();
     let newFirstName = event.target.firstName.value;
     let newLastName = event.target.lastName.value;
     let newUserid = event.target.userid.value;
 
-    await Log.append('');
-    await Log.append(`OLD:  ${firstName}, ${lastName}, ${userid}`);
-    await Log.append(`NEW:  ${newFirstName}, ${newLastName}, ${newUserid}`);
-    await Log.append('');
+    Log.append(`sending request.. :: ${newFirstName} ${newLastName} ${newUserid}`, true);
 
-    Api.updateStudent( id, props.classID, newFirstName, newLastName, newUserid ).then( json => {
+    Api.updateStudent( id, props.ClassID, newFirstName, newLastName, newUserid ).then( json => {
       if( json.success ) {
         setFirstName( newFirstName );
         setLastName( newLastName );
-        setUserid( newUserid );
-
-        props.refreshFunc();
+        setUserID( newUserid );
+        props.RefreshFunc();
       }
       Log.append( json.message );
     })
   }
 
+
+  /* remove student
+  */
   const handleRemove = async () => {
-    if( !props.new ) {
+    if( !props.New ) {
       Api.deleteStudent( id ).then( json => {
         if( json.success )
-          setDisplay('display-none');
+          props.RefreshFunc();
 
-        Log.append("");
-        Log.append( json.message );
+        Log.append( json.message, true );
       });
-      props.refreshFunc();
     }
   }
 
-  const handleFocus = (event) => {
-    setCssBackground('active-student');
-  }
 
-  const handleBlur = (event) => {
-    setCssBackground('');
-  }
+  /* changes background when focusing
+  */
+  const handleFocus = (event) => { setCssBackground('active-student'); }
+  const handleFocusLoss = (event) => { setCssBackground(''); }
 
-  return(
-    <div className={`student-form ${display}`}>
-      <form onSubmit={handleSubmit}>
+
+  /* render
+  */
+  return (
+    <div className={`student-form ${cssDisplay}`}>
+      <form onSubmit={handleUpdate}>
         <div className={cssBackground}>
-          <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={firstName} name='firstName' className='text-field' />
-          <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={lastName} name='lastName' className='text-field' />
-          <input type='text' onFocus={handleFocus} onBlur={handleBlur} defaultValue={userid} name='userid' className='text-field' />
+          <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={firstName} name='firstName' className='text-field' />
+          <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={lastName} name='lastName' className='text-field' />
+          <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={userid} name='userid' className='text-field' />
           <button type="submit"></button>
         </div>
       </form>
-      <button onClick={handleRemove} className={(props.new) ? ('student-button-remove student-button-remove-new') : ('student-button-remove')}> - </button>
+      <button onClick={handleRemove} className={(props.New) ? ('student-button-remove student-button-remove-new') : ('student-button-remove')}> - </button>
     </div>
   );
 }

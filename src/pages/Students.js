@@ -20,19 +20,19 @@ function Students() {
       await Log.append('Students...');
     }
 
-    Api.getStudents().then( data => {
-      setJson( data );
-    } );
-
+    refresh();
     initialMessage();
   }, [] );
 
-  const refreshA = () => {
+
+  /* refresh page
+  */
+  const refresh = () => {
     Api.getStudents().then( data => {
-      const temp = [...data]
-      setJson( temp );
+      setJson( [...data] );
     } );
   }
+
 
   /* render
   */
@@ -46,7 +46,7 @@ function Students() {
         {json.map( (object, index) => {
           return(
             <div key={`student-${index}`} className='student-group-div'>
-              <Class json={object} refreshFunc={refreshA} />
+              <Class Json={object} RefreshFunc={refresh} />
             </div> )
         })}
         </Slider>

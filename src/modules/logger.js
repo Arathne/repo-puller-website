@@ -12,8 +12,19 @@ function print() {
 
 
 /* adds line to log */
-function append( line ) {
+function append( line, empty ) {
+  if( empty ) {
+    log.push( "" )
+    dispatch()
+  }
+
   log.push( line );
+  dispatch();
+}
+
+
+/* dispatch event */
+function dispatch() {
   window.dispatchEvent( logEvent );
 }
 

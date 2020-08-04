@@ -107,7 +107,7 @@ def update_student():
             else:
                 message = "could not find class -- terminating"
     except:
-        message = "something went wrong!"
+        message = "something went wrong! -- failed"
 
     return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message)
 
@@ -144,6 +144,6 @@ def update_class():
         else:
             message = "class not found -- terminating"
     except:
-        message = "something went wrong!"
+        message = "something went wrong! -- failed"
 
     return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message);

@@ -1,7 +1,10 @@
+/* list students in the class */
+
 import React, {useEffect, useState} from 'react';
 import Student from './Student.js';
 const Api = require('../modules/api.js');
 const Log = require('../modules/logger.js');
+
 
 function Class( props ) {
   const [classID, setClassID] = useState('');
@@ -9,8 +12,9 @@ function Class( props ) {
   const [students, setStudents] = useState([]);
   const [addMode, setAddMode] = useState(false);
 
-  let unofficial = [];
 
+  /* updates class name
+  */
   const handleSubmit = async (event) => {
     event.preventDefault();
     let newClassName = event.target.firstName.value;
@@ -20,36 +24,43 @@ function Class( props ) {
         if( json.success )
           setClassName(newClassName);
 
-        Log.append( "" )
-        Log.append( json.message );
+        Log.append( json.message, true );
       });
     else {
-      await Log.append( "" );
+      await Log.append( "" )
       await Log.append( "no change in class name detected" );
   }}
 
+
+  /* adds extra component used for adding students
+  */
   const handleAdd = () => {
     setAddMode( !addMode )
   }
 
-  const handleRefresh = () => {
-    props.refreshFunc();
-  }
 
+  /* runs when json file is updated
+  */
   useEffect( () => {
-    setClassID( props.json.classid );
-    setClassName( props.json.class );
-    setStudents( props.json.students );
-  }, [props.json] );
+    setClassID( props.Json.classid );
+    setClassName( props.Json.class );
+    setStudents( props.Json.students );
+  }, [props.Json] );
 
+
+  /* creates a component for each student
+  */
   const Students = () => {
     return ( students.map( (student, index) => {
       return (
-        <Student ID={student.id} FirstName={student.firstName} LastName={student.lastName} UserID={student.username} ClassID={classID} refreshFunc={props.refreshFunc} key={`student-${index}`} />
+        <Student ID={student.id} FirstName={student.firstName} LastName={student.lastName} UserID={student.username} ClassID={classID} RefreshFunc={props.RefreshFunc} key={`student-${index}`} />
       )
     }))
   }
 
+
+  /* render
+  */
   return (
     <div className="student-class">
       <form onSubmit={handleSubmit}>
@@ -58,11 +69,11 @@ function Class( props ) {
 
       <div className="student-class-buttons">
         <button onClick={handleAdd}> + </button>
-        <button onClick={handleRefresh}> o </button>
+        <button onClick={props.RefreshFunc}> o </button>
       </div>
 
       <Students />
-      {addMode && ( <Student ID={-1} FirstName='first' LastName='last' UserID='userid' classID={classID} refreshFunc={props.refreshFunc} new={true} /> )}
+      {addMode && ( <Student ID={-1} FirstName='first' LastName='last' UserID='userid' ClassID={classID} RefreshFunc={props.RefreshFunc} New={true} /> )}
     </div>
   );
 }
