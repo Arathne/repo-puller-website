@@ -34,6 +34,7 @@ function Class( props ) {
   /* adds extra component used for adding students
   */
   const handleAdd = () => {
+    Log.append(`add student mode -- ${!addMode}`, true);
     setAddMode( !addMode )
   }
 
@@ -41,6 +42,7 @@ function Class( props ) {
   /* handle refresh
   */
   const handleRefresh = () => {
+    props.RefreshFunc();
     Log.append('refreshing page -- success', true);
   }
 

@@ -16,7 +16,7 @@ function Terminal() {
   */
   function updateTerminal() {
     setCurrentLine( Log.last() );
-    setContent( Log.content() )
+    setContent( Log.content() );
   }
 
 
@@ -36,7 +36,7 @@ function Terminal() {
   */
   useEffect( () => {
     bottomRef.current.scrollIntoView({behavior: 'smooth'});
-  }, [content]);
+  }, [content, currentLine]);
 
 
   /* converts the current state of the log to H2 tags

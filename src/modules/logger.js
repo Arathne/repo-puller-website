@@ -22,7 +22,7 @@ function append( line, empty ) {
 /* returns the log without last line
 */
 function content() {
-  return log;
+  return [...log];
 }
 
 
