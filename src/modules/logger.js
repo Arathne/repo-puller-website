@@ -1,50 +1,40 @@
 /* log does not keep track of terminal startup text */
 
 const logEvent = new Event('logger');
-let log = [''];
+let log = [];
+let lastLine = '';
 
 
-/* prints the entire log */
-function print() {
-  for( let i = 0; i < log.length; i++ )
-    console.log( log[i] );
-}
-
-
-/* adds line to log */
+/* adds line to log
+ *    empty (true) to insert empty line first
+*/
 function append( line, empty ) {
-  if( empty ) {
-    log.push( "" )
-    dispatch()
-  }
+  log.push( lastLine );
 
-  log.push( line );
-  dispatch();
-}
+  if( empty )
+    log.push( "" );
 
-
-/* dispatch event */
-function dispatch() {
+  lastLine = line;
   window.dispatchEvent( logEvent );
 }
 
 
-/* returns the entire log */
-function getLog() {
+/* returns the log without last line
+*/
+function content() {
   return log;
 }
 
 
-/* returns last line of log */
-function getLast() {
-  return log[log.length-1];
+/* returns last line of log
+*/
+function last() {
+  return lastLine;
 }
 
 
-
 module.exports = {
-  print,
   append,
-  getLog,
-  getLast
+  content,
+  last
 };

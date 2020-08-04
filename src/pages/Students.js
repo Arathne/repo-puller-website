@@ -15,13 +15,8 @@ function Students() {
   /* runs on start
   */
   useEffect( () => {
-    async function initialMessage() {
-      await Log.append('');
-      await Log.append('Students...');
-    }
-
+    Log.append('Students...', true);
     refresh();
-    initialMessage();
   }, [] );
 
 

@@ -15,7 +15,7 @@ function Class( props ) {
 
   /* updates class name
   */
-  const handleSubmit = async (event) => {
+  const handleClassUpdate = (event) => {
     event.preventDefault();
     let newClassName = event.target.firstName.value;
 
@@ -26,16 +26,22 @@ function Class( props ) {
 
         Log.append( json.message, true );
       });
-    else {
-      await Log.append( "" )
-      await Log.append( "no change in class name detected" );
-  }}
+    else
+      Log.append( "no change in class name detected -- failed", true );
+  }
 
 
   /* adds extra component used for adding students
   */
   const handleAdd = () => {
     setAddMode( !addMode )
+  }
+
+
+  /* handle refresh
+  */
+  const handleRefresh = () => {
+    Log.append('refreshing page -- success', true);
   }
 
 
@@ -63,13 +69,13 @@ function Class( props ) {
   */
   return (
     <div className="student-class">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleClassUpdate}>
         <input type='text' defaultValue={className} name='firstName' className='text-field class-field' />
       </form>
 
       <div className="student-class-buttons">
         <button onClick={handleAdd}> + </button>
-        <button onClick={props.RefreshFunc}> o </button>
+        <button onClick={handleRefresh}> o </button>
       </div>
 
       <Students />

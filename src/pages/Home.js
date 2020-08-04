@@ -4,27 +4,23 @@ const Log = require('../modules/logger.js')
 function Home() {
   const [buttonDisplay, setButtonDisplay] = useState('inline-block');
 
-  async function domainClick() {
-    await Log.append('');
-    await Log.append("domain that will be searched");
+  function domainClick() {
+    Log.append("domain that will be searched", true);
   }
 
-  async function apiClick() {
-    await Log.append('');
-    await Log.append("API key is required to prevent getting");
-    await Log.append("locked out of iupui account");
+  function apiClick() {
+    Log.append('API key is required to prevent getting', true);
+    Log.append('locked out of iupui account');
   }
 
-  async function repoClick() {
-    await Log.append('');
-    await Log.append("name of the repository that will be");
-    await Log.append("downloaded from each of the students");
+  function repoClick() {
+    Log.append('name of the repository that will be', true)
+    Log.append('downloaded from each of the students');
   }
 
-  async function zipClick() {
-    await Log.append('');
-    await Log.append("name of the zip file with all the");
-    await Log.append("student repositories");
+  function zipClick() {
+    Log.append('name of the zip file with all the', true)
+    Log.append('student repositories');
   }
 
 
@@ -32,21 +28,13 @@ function Home() {
     event.preventDefault();
   }
 
-  async function buttonPressed() {
-    await Log.append('');
-    await Log.append('Sending Request...');
-
-
+  function buttonPressed() {
+    Log.append('Sending Request...', true);
     setButtonDisplay('none');
   }
 
   useEffect( () => {
-    async function initialMessage() {
-      await Log.append('');
-      await Log.append('Home...');
-    }
-
-    initialMessage();
+    Log.append('Home...', true);
   }, [] );
 
   return(

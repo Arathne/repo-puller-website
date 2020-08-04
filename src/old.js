@@ -1,3 +1,5 @@
+const sleep = (milliseconds) => { return new Promise(resolve => setTimeout(resolve, milliseconds)) };
+
 import React, {useState, useEffect} from 'react';
 import '../css/home.css'
 

@@ -4,12 +4,7 @@ const Log = require('../modules/logger.js');
 function Archive() {
 
   useEffect( () => {
-    async function initialMessage() {
-      await Log.append('');
-      await Log.append('Archive...');
-    }
-
-    initialMessage();
+    Log.append('Archive...', true);
   }, [] );
 
   return(

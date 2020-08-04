@@ -4,12 +4,7 @@ const Log = require('../modules/logger.js');
 function Options() {
 
   useEffect( () => {
-    async function initialMessage() {
-      await Log.append('');
-      await Log.append('Options...');
-    }
-
-    initialMessage();
+    Log.append('Options...', true);
   }, [] );
 
   return(

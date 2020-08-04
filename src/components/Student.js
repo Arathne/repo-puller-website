@@ -9,9 +9,7 @@ function Student( props ) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userid, setUserID] = useState('');
-
   const [cssBackground, setCssBackground] = useState('');
-  const [cssDisplay, setCssDisplay] = useState('');
 
 
   /* runs on start
@@ -26,7 +24,7 @@ function Student( props ) {
 
   /* update student
   */
-  const handleUpdate = async (event) => {
+  const handleUpdate = (event) => {
     event.preventDefault();
     let newFirstName = event.target.firstName.value;
     let newLastName = event.target.lastName.value;
@@ -48,7 +46,7 @@ function Student( props ) {
 
   /* remove student
   */
-  const handleRemove = async () => {
+  const handleRemove = () => {
     if( !props.New ) {
       Api.deleteStudent( id ).then( json => {
         if( json.success )
@@ -69,7 +67,7 @@ function Student( props ) {
   /* render
   */
   return (
-    <div className={`student-form ${cssDisplay}`}>
+    <div className={`student-form`}>
       <form onSubmit={handleUpdate}>
         <div className={cssBackground}>
           <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={firstName} name='firstName' className='text-field' />
