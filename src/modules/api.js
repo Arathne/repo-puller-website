@@ -1,7 +1,5 @@
-/* every function returns a promise of a JSON file */
-
-const JSZip = require('jszip');
-/* example:
+/* every function returns a promise of a JSON file
+ * example:
  * const Api = require('../libs/api.js');
  *
  * Api.getStudents().then( data => {
@@ -81,20 +79,27 @@ function deleteStudent( id ) {
 }
 
 
+/* get available files
+*/
+function getAvailableFiles() {
+  const info = { id: 10 }
+  return callApiPost('/api/zip', info);
+}
+
+
 /* downloads file from api
  *    gets the response as a blob instead of a json
  *    returns a url of file location
 */
 function downloadFile( filename ) {
   const info = { fileName: filename }
-
   const post = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(info),
   }
 
-  return fetch('/api/download', post).then( response => {
+  return fetch('/api/zip/download', post).then( response => {
     if( response.ok )
       return response.blob()
   }).then( blob => {
@@ -110,6 +115,7 @@ function downloadFile( filename ) {
 
 module.exports = {
   getAll,
+  getAvailableFiles,
   downloadFile,
   updateStudent,
   deleteStudent,

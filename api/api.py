@@ -1,5 +1,7 @@
 from flask import Flask, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
+import pathlib
+import os
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 
@@ -7,6 +9,10 @@ app = Flask(__name__, static_folder="../build", static_url_path='/')
 ## SECRET KEY FOR FLASK SESSION
 with open('secret_key') as file:
     app.config['SECRET_KEY'] = file.read()
+
+
+## ARCHIVE FOLDER
+app.config['ARCHIVE'] = pathlib.Path(__file__).parent.absolute() / 'archive'
 
 
 ## SQL ALCHEMY
@@ -149,7 +155,31 @@ def update_class():
     return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message);
 
 
-@app.route('/api/download', methods = ['POST'])
+
+## get available files and return their file names
+##    (only name and not the actual file)
+##
+@app.route('/api/zip', methods = ['POST'])
+def get_file_info():
+    info = request.json
+    jsonPath = '';
+
+    data = app.config['ARCHIVE'].glob('*')
+    data = sorted(data, key=os.path.getmtime)
+    directory = [x for x in data if x.is_file()]
+    for i in range( len(directory) ):
+        current = len(directory)-i-1 ## sorted backwards
+        jsonPath += '\"%s\"' % directory[current].name
+        if i < len(directory) - 1:
+            jsonPath += ', '
+    jsonPath = '[ %s ]' % jsonPath
+
+    return jsonPath;
+
+
+## sends file to client
+##
+@app.route('/api/zip/download', methods = ['POST'])
 def get_file():
     info = request.json
-    return send_from_directory('.', filename=info['fileName'], as_attachment=True);
+    return send_from_directory(app.config['ARCHIVE'], filename=info['fileName'], as_attachment=True);

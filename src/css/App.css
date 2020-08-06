@@ -148,6 +148,14 @@ button[type='submit'] {
   display: none;
 }
 
+.display-inline {
+  display: inline;
+}
+
+.display-none {
+  display: none;
+}
+
 @keyframes pulse {
   100% { filter: hue-rotate(-360deg); }
 }
