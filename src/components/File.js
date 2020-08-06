@@ -21,7 +21,7 @@ function File(props) {
   return(
     <div>
       <button onClick={download}> {name} </button>
-      <a href={url} ref={refTag} className='display-none' download> {name} </a>)
+      <a href={url} ref={refTag} className='display-none' download={name}> {name} </a>)
     </div>
   );
 }
