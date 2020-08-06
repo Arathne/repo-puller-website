@@ -1,5 +1,6 @@
 /* every function returns a promise of a JSON file */
 
+const JSZip = require('jszip');
 /* example:
  * const Api = require('../libs/api.js');
  *
@@ -40,9 +41,9 @@ function callApiPost( route, request ) {
 }
 
 
-/* all information accessible
+/* all information of accessible classes
 */
-function getStudents() {
+function getAll() {
   return callApi('/api/all');
 }
 
@@ -57,7 +58,6 @@ function updateStudent( id, classid, newFirstName, newLastName, newUserName ) {
     lastName: newLastName,
     userName: newUserName
   }
-
   return callApiPost('/api/students/update', student)
 }
 
@@ -81,9 +81,37 @@ function deleteStudent( id ) {
 }
 
 
+/* downloads file from api
+ *    gets the response as a blob instead of a json
+ *    returns a url of file location
+*/
+function downloadFile( filename ) {
+  const info = { fileName: filename }
+
+  const post = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(info),
+  }
+
+  return fetch('/api/download', post).then( response => {
+    if( response.ok )
+      return response.blob()
+  }).then( blob => {
+    let url = '';
+    if( blob ) {
+      let file = new File([blob], filename);
+      url = window.URL.createObjectURL( file );
+    }
+    return url;
+  })
+}
+
+
 module.exports = {
-  getStudents,
+  getAll,
+  downloadFile,
   updateStudent,
   deleteStudent,
-  updateClass
+  updateClass,
 };

@@ -9,7 +9,6 @@ function Terminal() {
   const [currentLine, setCurrentLine] = useState(''); // this is always the bottom (autoscrolling)
   const [content, setContent] = useState([]);
   const bottomRef = useRef(null); // focus on bottom element
-  const delay = 20; // delay in ms
 
 
   /* runs after log has been updated
@@ -25,7 +24,6 @@ function Terminal() {
   useEffect( () => {
     window.addEventListener('logger', updateTerminal);
 
-    let data = [];
     Startup.DOS.map( (line, index) => { // map is asyncronous and will print out of order
       Log.append( line )
     });

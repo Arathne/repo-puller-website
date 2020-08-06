@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
@@ -147,3 +147,9 @@ def update_class():
         message = "something went wrong! -- failed"
 
     return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message);
+
+
+@app.route('/api/download', methods = ['POST'])
+def get_file():
+    info = request.json
+    return send_from_directory('.', filename=info['fileName'], as_attachment=True);

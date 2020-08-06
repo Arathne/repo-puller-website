@@ -1,6 +1,6 @@
 /* displays information of student which can be changed */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 const Log = require('../modules/logger.js');
 const Api = require('../modules/api.js');
 
@@ -10,7 +10,7 @@ function Student( props ) {
   const [lastName, setLastName] = useState('');
   const [userid, setUserID] = useState('');
   const [cssBackground, setCssBackground] = useState('');
-
+  
 
   /* runs on start
   */
