@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 const Log = require('../modules/logger.js')
+const Api = require('../modules/api.js')
 
 function Home() {
   const [buttonDisplay, setButtonDisplay] = useState('inline-block');
@@ -31,6 +32,10 @@ function Home() {
   function buttonPressed() {
     Log.append('Sending Request...', true);
     setButtonDisplay('none');
+
+    Api.generateZip(1).then( json => {
+      console.log(json.message)
+    })
   }
 
   useEffect( () => {

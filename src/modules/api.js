@@ -79,6 +79,14 @@ function deleteStudent( id ) {
 }
 
 
+/* pull repos
+*/
+function generateZip( classid ) {
+  const student = { classid: classid }
+  return callApiPost('/api/zip/generate', student);
+}
+
+
 /* get available files
 */
 function getAvailableFiles() {
@@ -115,6 +123,7 @@ function downloadFile( filename ) {
 
 module.exports = {
   getAll,
+  generateZip,
   getAvailableFiles,
   downloadFile,
   updateStudent,

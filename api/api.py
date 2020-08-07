@@ -1,7 +1,13 @@
+## START #######################################################################
+
 from flask import Flask, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
+from git import Repo
+import shutil
 import pathlib
 import os
+import datetime
+
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
 
@@ -12,7 +18,15 @@ with open('secret_key') as file:
 
 
 ## ARCHIVE FOLDER
-app.config['ARCHIVE'] = pathlib.Path(__file__).parent.absolute() / 'archive'
+app.config['ROOT'] = pathlib.Path(__file__).parent.absolute()
+app.config['ARCHIVE'] = app.config['ROOT'] / 'archive'
+app.config['TEMP'] = app.config['ROOT'] / 'temp'
+
+
+## GITHUB AUTHENTICATION
+app.config['USERNAME'] = '260da436e05e0cf2db41c44e386b0d8b6b16b35f' ## dont bother, already regenerated
+app.config['PASSWORD'] = 'x-oauth-basic'
+app.config['DOMAIN'] = 'github.iu.edu'
 
 
 ## SQL ALCHEMY
@@ -42,7 +56,7 @@ class Students (db.Model):
 
 
 
-## PRIVATE FUNCTIONS
+## PRIVATE FUNCTIONS ###########################################################
 
 ## converts list of students into json
 ##
@@ -56,8 +70,56 @@ def students_to_json (studentList):
     return '[ %s ]' % studentsJSON
 
 
+# @purpose   removes a folder
+#    from script-3
+#
+def removeDirectory( path ):
+	shutil.rmtree( path, ignore_errors=True  )
 
-## ROUTING
+
+# @purpose   create a folder if it does not exist
+#    from script-3
+#
+def createDirectory( path ):
+	if not os.path.exists( path ):
+		os.mkdir( path )
+
+
+# clones repository of a student
+#    from script-3
+#
+def cloneRepo( username, password, domain, student, repo, path, dirName ):
+
+	success = True
+	repo = student + '/' + repo + '.git'
+	dir = os.path.join( path, dirName )
+	createDirectory( dir )
+
+	url = "https://%s:%s@%s/%s" % ( username, password, domain, repo )
+
+	try:
+		Repo.clone_from( url, dir, branch='master' )
+		#print( "*** SUCCESS ***    " + student )
+	except:
+		removeDirectory( dir )
+		success = False
+		#print( "*** FAILED  ***    " + student )
+
+	return success
+
+
+## creates a log file based on array of strings
+##
+def create_log(path, filename, stringArray):
+    with open(os.path.join(path, filename), 'w') as file:
+        all = ''
+        for line in stringArray:
+            all += line + '\n'
+        file.write(all)
+
+
+
+## ROUTING #####################################################################
 
 ## default
 @app.route('/')
@@ -78,7 +140,6 @@ def classes_to_json():
             studentJSON += ', '
 
     return '[ %s ]' % studentJSON
-
 
 
 ## updates existing student or creates a new one
@@ -182,3 +243,40 @@ def get_file_info():
 def get_file():
     info = request.json
     return send_from_directory(app.config['ARCHIVE'], filename=info['fileName'], as_attachment=True)
+
+
+## pull repositories of students
+##
+@app.route('/api/zip/generate', methods = ['POST'])
+def pull():
+    data = request.json
+    classQuery = Classes.query.filter_by(id=data['classid']).first()
+    repo = 'csci24000_spring2020_A5'
+
+    root_folder = '%s %s' % (repo, datetime.datetime.now()) # generate unique folder name to prevent pull collisions
+    root_folder = os.path.join(app.config['TEMP'], root_folder) # absolute path
+    createDirectory(root_folder)
+
+    successLog = [];
+    failedLog = [];
+
+    if classQuery:
+        studentQuery = Students.query.filter_by(classroom=classQuery).all()
+        for student in studentQuery:
+            student_folder = '%s-%s' % (student.last, student.first)
+            repoResult = cloneRepo( app.config['USERNAME'], app.config['PASSWORD'], app.config['DOMAIN'], student.username, repo, root_folder, student_folder )
+            if repoResult:
+                successLog.append( "%-20s %-20s" % (student.first, student.last) )
+            else:
+                failedLog.append( "%-20s %-20s" % (student.first, student.last) )
+
+    create_log( root_folder, 'success.log', successLog )
+    create_log( root_folder, 'failed.log', failedLog )
+
+    source = root_folder ## zip contents
+    destination = app.config['ARCHIVE'] / os.path.basename(root_folder)
+    shutil.make_archive( destination, 'zip', os.path.dirname(source), os.path.basename(source) )
+
+    removeDirectory(root_folder)
+
+    return '{ \"success\": %s, \"message\": \"%s\" }' % ('true', 'testing...');
