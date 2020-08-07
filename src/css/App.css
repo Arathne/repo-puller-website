@@ -90,12 +90,14 @@ h3 {
 
 button {
   font-family: Arcade;
-  font-size: 3.2em;
-  color: green;
-  filter: brightness(2);
+  font-size: 2.5em;
+  color: #aaa;
   border: none;
   background-color: transparent;
-  pointer-events: all;
+}
+
+button:hover {
+  color: white;
 }
 
 .form {

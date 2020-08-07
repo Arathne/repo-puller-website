@@ -13,6 +13,7 @@ import Readme from './pages/Readme.js';
 
 import './css/App.css';
 import './css/Pages.css';
+import './css/Students.css';
 import './css/Components.css';
 import './css/Cube.scss';
 

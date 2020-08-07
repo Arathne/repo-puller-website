@@ -125,7 +125,7 @@ def update_student():
 def delete_student():
     student = request.json
     Students.query.filter_by( id=student['id'] ).delete()
-    db.session.commit();
+    db.session.commit()
 
     return '{ \"success\": %s, \"message\": \"%s\" }' % ("true", "eliminate student -- success");
 
@@ -162,7 +162,7 @@ def update_class():
 @app.route('/api/zip', methods = ['POST'])
 def get_file_info():
     info = request.json
-    jsonPath = '';
+    jsonPath = ''
 
     data = app.config['ARCHIVE'].glob('*')
     data = sorted(data, key=os.path.getmtime)
@@ -172,9 +172,8 @@ def get_file_info():
         jsonPath += '\"%s\"' % directory[current].name
         if i < len(directory) - 1:
             jsonPath += ', '
-    jsonPath = '[ %s ]' % jsonPath
 
-    return jsonPath;
+    return '[ %s ]' % jsonPath
 
 
 ## sends file to client
@@ -182,4 +181,4 @@ def get_file_info():
 @app.route('/api/zip/download', methods = ['POST'])
 def get_file():
     info = request.json
-    return send_from_directory(app.config['ARCHIVE'], filename=info['fileName'], as_attachment=True);
+    return send_from_directory(app.config['ARCHIVE'], filename=info['fileName'], as_attachment=True)
