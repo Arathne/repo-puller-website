@@ -7,6 +7,7 @@ function File(props) {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [css, setCss] = useState('');
+  const [downloading, setDownloading] = useState(false);
   const refTag = useRef(null);
 
   useEffect( () => {
@@ -17,7 +18,7 @@ function File(props) {
     Log.append('starting download...', true);
     Log.append('may take a min -- please do not leave page');
     setCss('archive-download-active');
-
+    setDownloading(true);
     Api.downloadFile(props.FileName).then( fileURL => {
       setUrl( fileURL );
       if( fileURL === '' ) {
@@ -25,14 +26,19 @@ function File(props) {
       } else {
         refTag.current.click();
         Log.append(`download complete - ${name}`, true);
+        setDownloading(false);
       }
       setCss('');
     });
   }
 
+  const patience = () => {
+    Log.append('download already in progress', true)
+  }
+
   return(
     <div>
-      <button onClick={download} className={css}> {name} </button>
+      <button onClick={!downloading ? (download) : (patience)} className={css}> {name} </button>
       <a href={url} ref={refTag} className='display-none' download={name}> {name} </a>)
     </div>
   );
