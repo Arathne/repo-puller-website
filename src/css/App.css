@@ -97,7 +97,7 @@ button {
 }
 
 button:hover {
-  color: white;
+  opacity: 0.5;
 }
 
 .form {
