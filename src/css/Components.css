@@ -8,6 +8,7 @@
 
 /* Navigation Bar */
 .nav-root {
+  width: 100%;
   margin: auto;
   display: block;
 }
@@ -18,6 +19,15 @@
   width: 95%;
   white-space: nowrap;
   scroll-behavior: smooth;
+}
+
+.front {
+  z-index: 100;
+}
+
+.fixed {
+  position: fixed;
+  background-color: black;
 }
 
 
@@ -37,9 +47,10 @@
 
 /* Terminal */
 .terminal {
-  float: right;
-  width: 35%;
-  height: 100%;
+  position: fixed;
+  right: 4vw;
+  width: 32%;
+  height: 68vh;
   text-align: left;
 }
 
@@ -63,7 +74,7 @@
 /* 4 Cubes */
 @media only screen and (max-width: 1500px) {
   .terminal {
-    width: 45
+
   }
 }
 
@@ -79,5 +90,14 @@
 
 /* 2 Cubes */
 @media only screen and (max-width: 900px) {
+  .student-middle {
+    display: none;
+  }
+}
 
+/* 2 Cubes */
+@media only screen and (max-width: 600px) {
+  .student-left {
+    display: none;
+  }
 }

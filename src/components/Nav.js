@@ -49,7 +49,7 @@ function Nav() {
         speed={500}
         centerMode={true}
         infinite={true}
-        className='nav-slider'
+        className='nav-slider fixed front'
 
         adjustHeight={true}
         arrows={true}
@@ -63,6 +63,21 @@ function Nav() {
         <NavLink to='/archive' exact> <Cube /> </NavLink>
         <NavLink to='/options' exact> <Cube /> </NavLink>
         <NavLink to='/readme' exact> <Cube /> </NavLink>
+      </Slider>
+      <Slider
+        speed={500}
+        centerMode={true}
+        infinite={true}
+        className='nav-slider'
+
+        adjustHeight={true}
+        arrows={true}
+        slidesPerRow={slideAmount}
+        centerPadding={0}
+        dots={true}
+        slidesToScroll={1}
+      >
+        <Cube />
       </Slider>
     </div>
   );

@@ -38,6 +38,7 @@
   width: 90%;
   border-radius: 30%;
   animation: pulse 20s linear infinite;
+  margin: 16px 0 0 0;
 }
 
 .app-content {
@@ -50,16 +51,6 @@
 .app-content-page {
   width: 64%;
   height: 100%;
-}
-
-.scanlines {
-  background: repeating-linear-gradient(transparent, transparent 1px, black 2px, black 2px);
-  pointer-events: none;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  z-index: 1;
 }
 
 body {

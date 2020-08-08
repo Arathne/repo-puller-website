@@ -38,7 +38,6 @@ function App() {
             </Switch>
           </div>
         </div>
-        <div className='scanlines'></div>
       </div>
     </Router>
   );

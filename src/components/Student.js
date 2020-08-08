@@ -10,7 +10,7 @@ function Student( props ) {
   const [lastName, setLastName] = useState('');
   const [userid, setUserID] = useState('');
   const [cssBackground, setCssBackground] = useState('');
-  
+
 
   /* runs on start
   */
@@ -70,8 +70,8 @@ function Student( props ) {
     <div className={`student-form`}>
       <form onSubmit={handleUpdate}>
         <div className={cssBackground}>
-          <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={firstName} name='firstName' className='text-field' />
-          <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={lastName} name='lastName' className='text-field' />
+          <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={firstName} name='firstName' className='text-field student-left' />
+          <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={lastName} name='lastName' className='text-field student-middle' />
           <input type='text' onFocus={handleFocus} onBlur={handleFocusLoss} defaultValue={userid} name='userid' className='text-field' />
           <button type="submit"></button>
         </div>
