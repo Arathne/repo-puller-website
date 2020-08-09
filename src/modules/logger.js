@@ -1,8 +1,14 @@
 /* log does not keep track of terminal startup text */
+const io = require('socket.io-client');
+const socket = io();
 
 const logEvent = new Event('logger');
 let log = [];
 let lastLine = '';
+
+socket.on('pull-update', (msg) => {
+  append(msg)
+})
 
 
 /* adds line to log
@@ -31,6 +37,7 @@ function content() {
 function last() {
   return lastLine;
 }
+
 
 
 module.exports = {

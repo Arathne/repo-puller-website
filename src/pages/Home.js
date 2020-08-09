@@ -23,8 +23,10 @@ function Home() {
 
 
   const handleSubmit = (event) => {
-    Log.append('Sending Request...', true);
-    Log.append('pulling repos usually takes 2 min')
+    Log.append('Sending Request...', true);;
+    Log.append('Pulling... takes about 2 min', true);
+    Log.append('');
+
     setButtonDisplay('none');
     event.preventDefault();
 
@@ -33,7 +35,8 @@ function Home() {
 
     if( classid ) {
       Api.generateZip(classid, repo).then( json => {
-        Log.append(json.message, true)
+        Log.append(json.message, true);
+        Log.append('go to Archive page to download', true);
         setButtonDisplay('inline-block');
       })
     }

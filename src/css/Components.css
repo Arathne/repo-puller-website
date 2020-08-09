@@ -69,6 +69,10 @@
   vertical-align: top;
 }
 
+.terminal h2 {
+  white-space: pre !important;
+
+}
 
 /* Screen Resize */
 /* 4 Cubes */

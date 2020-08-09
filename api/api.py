@@ -2,6 +2,7 @@
 
 from flask import Flask, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
+from flask_socketio import SocketIO, send
 from git import Repo
 import shutil
 import pathlib
@@ -10,7 +11,7 @@ import datetime
 
 
 app = Flask(__name__, static_folder="../build", static_url_path='/')
-
+socketio = SocketIO(app)
 
 ## SECRET KEY FOR FLASK SESSION
 with open('secret_key') as file:
@@ -275,7 +276,7 @@ def pull():
     repo = info['repo']
     success = "false";
     message = ""
-    
+
     if repo:
         root_folder = '%s %s' % (repo, datetime.datetime.now()) # generate unique folder name to prevent pull collisions
         root_folder = os.path.join(app.config['TEMP'], root_folder) # absolute path
@@ -291,8 +292,10 @@ def pull():
                 repoResult = cloneRepo( app.config['USERNAME'], app.config['PASSWORD'], app.config['DOMAIN'], student.username, repo, root_folder, student_folder )
                 if repoResult:
                     successLog.append( "%-20s %-20s" % (student.first, student.last) )
+                    socketio.emit('pull-update', "SUCCESS :: %s %s :: %s" % (student.first, student.last, classQuery.name))
                 else:
                     failedLog.append( "%-20s %-20s" % (student.first, student.last) )
+                    socketio.emit('pull-update', "FAILED  :: %s %s :: %s" % (student.first, student.last, classQuery.name))
 
             create_log( root_folder, 'success.log', successLog ) ## generate .log files
             create_log( root_folder, 'failed.log', failedLog )
@@ -302,6 +305,11 @@ def pull():
             shutil.make_archive( destination, 'zip', os.path.dirname(source), os.path.basename(source) )
 
             removeDirectory(root_folder) ## delete temp files
+
+            socketio.emit('pull-update', '')
+            socketio.emit('pull-update', "SUBMITTED: %s :: %s" % (len(successLog), classQuery.name))
+            socketio.emit('pull-update', "NO SUBMISSIONS: %s :: %s" % (len(failedLog), classQuery.name))
+            
             success = 'true'
             message = 'zip generated -- success'
         else:
@@ -310,4 +318,8 @@ def pull():
         message = 'input repo name -- failed'
 
 
-    return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message);
+    return '{ \"success\": %s, \"message\": \"%s\", \"successful\": %s, \"failed\": %s }' % (success, message, len(successLog), len(failedLog));
+
+
+if __name__ == '__main__':
+    socketio.run(app)
