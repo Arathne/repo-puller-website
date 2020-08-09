@@ -41,10 +41,16 @@ function callApiPost( route, request ) {
 
 /* all information of accessible classes
 */
-function getAll() {
-  return callApi('/api/all');
+function getClassInfo() {
+  return callApi('/api/info/classes');
 }
 
+
+/* general info used for pulling repos
+*/
+function getGeneralInfo() {
+  return callApi('/api/info/general');
+}
 
 /* updates existing student or creates a new one when necessary
 */
@@ -81,9 +87,12 @@ function deleteStudent( id ) {
 
 /* pull repos
 */
-function generateZip( classid ) {
-  const student = { classid: classid }
-  return callApiPost('/api/zip/generate', student);
+function generateZip( classid, repo ) {
+  const info = {
+    classid: classid,
+    repo: repo
+  }
+  return callApiPost('/api/zip/generate', info);
 }
 
 
@@ -122,7 +131,8 @@ function downloadFile( filename ) {
 
 
 module.exports = {
-  getAll,
+  getClassInfo,
+  getGeneralInfo,
   generateZip,
   getAvailableFiles,
   downloadFile,

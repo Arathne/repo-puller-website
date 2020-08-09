@@ -23,7 +23,7 @@ function Students() {
   /* refresh page
   */
   const refresh = () => {
-    Api.getAll().then( data => {
+    Api.getClassInfo().then( data => {
       setJson( [...data] );
     } );
   }

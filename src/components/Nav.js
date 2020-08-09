@@ -61,9 +61,9 @@ function Nav() {
         <NavLink to='/' activeClassName='nav-active' exact> <Cube /> </NavLink>
         <NavLink to='/students' exact> <Cube /> </NavLink>
         <NavLink to='/archive' exact> <Cube /> </NavLink>
-        <NavLink to='/options' exact> <Cube /> </NavLink>
         <NavLink to='/readme' exact> <Cube /> </NavLink>
       </Slider>
+
       <Slider
         speed={500}
         centerMode={true}

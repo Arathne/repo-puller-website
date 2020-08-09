@@ -4,6 +4,8 @@ const Api = require('../modules/api.js')
 
 function Home() {
   const [buttonDisplay, setButtonDisplay] = useState('inline-block');
+  const [api, setApi] = useState('');
+  const [classes, setClasses] = useState([]);
 
   function domainClick() {
     Log.append("domain that will be searched", true);
@@ -19,29 +21,43 @@ function Home() {
     Log.append('downloaded from each of the students');
   }
 
-  function zipClick() {
-    Log.append('name of the zip file with all the', true)
-    Log.append('student repositories');
-  }
-
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-  }
-
-  function buttonPressed() {
     Log.append('Sending Request...', true);
+    Log.append('pulling repos usually takes 2 min')
     setButtonDisplay('none');
+    event.preventDefault();
 
-    Api.generateZip(1).then( json => {
-      console.log(json.message)
-    })
+    let classid = event.target[3].value
+    let repo = event.target[2].value
+
+    if( classid ) {
+      Api.generateZip(classid, repo).then( json => {
+        Log.append(json.message, true)
+        setButtonDisplay('inline-block');
+      })
+    }
   }
 
   useEffect( () => {
     Log.append('Home...', true);
+
+    Api.getGeneralInfo().then( json => {
+      setApi(json.api)
+      setClasses(json.classes)
+    })
   }, [] );
 
+  const RenderClasses = () => {
+    return (
+      <select>
+        { classes.map( (current, index) => {
+          return <option value={current.id} key={index}> {current.name} </option>
+        })}
+      </select>
+    )
+  }
+  /*<option value="0" > Select class: </option>*/
   return(
     <div className='home-page'>
       <h1> Home </h1>
@@ -49,29 +65,35 @@ function Home() {
         <div className='form'>
           <div className='text-field-div'>
             <h3> Domain :: </h3>
-            <input type='text' placeholder='github.iu.edu' name='domain' onClick={domainClick} className='text-field' />
+            <input type='text' name='domain' onClick={domainClick} readOnly defaultValue='github.iu.edu' className='text-field' />
           </div>
           <div className='text-field-div'>
             <h3> Api :: </h3>
-            <input type='text' placeholder='7317A*********' name='api' onClick={apiClick} className='text-field' />
+            <input type='text' defaultValue={api} readOnly name='api' onClick={apiClick} className='text-field' />
           </div>
           <div className='text-field-div'>
             <h3> Repo :: </h3>
-            <input type='text' placeholder='csci24000_spring2020_A1' name='repo' onClick={repoClick} className='text-field' />
+            <input type='text' name='repo' defaultValue='csci24000_spring2020_A1' onClick={repoClick} className='text-field' />
           </div>
           <div className='text-field-div'>
-            <h3> Zip :: </h3>
-            <input type='text' placeholder='A1.zip' name='zip' onClick={zipClick} className='text-field' />
+            <h3> Class :: </h3>
+            <div className='home-select'>
+              <RenderClasses />
+            </div>
           </div>
         </div>
 
-        <h3> Set Timer </h3>
         <div>
-          <button onClick={buttonPressed} className='button' style={{display: buttonDisplay}}> SEND REQUEST </button>
+          <button className='button' style={{display: buttonDisplay}}> SEND REQUEST </button>
         </div>
       </form>
     </div>
   );
 }
-
+/*
+<div className='text-field-div'>
+  <h3> Class :: </h3>
+  <input type='text' placeholder='240' name='repo' onClick={repoClick} className='text-field' />
+</div>
+*/
 export default Home;

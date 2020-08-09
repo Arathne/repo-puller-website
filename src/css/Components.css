@@ -50,7 +50,7 @@
   position: fixed;
   right: 4vw;
   width: 32%;
-  height: 68vh;
+  height: 60vh;
   text-align: left;
 }
 
@@ -93,11 +93,15 @@
   .student-middle {
     display: none;
   }
+
 }
 
-/* 2 Cubes */
+/* 1 Cube */
 @media only screen and (max-width: 600px) {
-  .student-left {
+  .student-left, .text-field-div h3 {
     display: none;
+  }
+  .text-field-div .text-field {
+    width: 80%;
   }
 }

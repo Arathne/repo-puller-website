@@ -129,7 +129,7 @@ def index():
 
 ## returns a json file with information of every class
 ##
-@app.route('/api/all', methods = ['GET'])
+@app.route('/api/info/classes', methods = ['GET'])
 def classes_to_json():
     studentJSON = ''
     classesList = Classes.query.all()
@@ -140,6 +140,27 @@ def classes_to_json():
             studentJSON += ', '
 
     return '[ %s ]' % studentJSON
+
+
+## returns json file with general information used for pulling
+##
+@app.route('/api/info/general', methods = ['GET'])
+def general_info():
+    api = app.config['USERNAME'][:10]
+    api += '*' * 10
+
+    apiJSON = "\"api\": \"%s\"" % api
+
+    classJSON = ""
+    classQuery = Classes.query.all();
+    for i in range( len(classQuery) ):
+        classJSON += "{ \"name\": \"%s\", \"id\": %s }" % (classQuery[i].name, classQuery[i].id)
+        if i < len(classQuery) - 1:
+            classJSON += ","
+
+    classJSON = "\"classes\": [ %s ]" % classJSON
+
+    return "{ %s, %s }" % (apiJSON, classJSON)
 
 
 ## updates existing student or creates a new one
@@ -249,34 +270,44 @@ def get_file():
 ##
 @app.route('/api/zip/generate', methods = ['POST'])
 def pull():
-    data = request.json
-    classQuery = Classes.query.filter_by(id=data['classid']).first()
-    repo = 'csci24000_spring2020_A5'
+    info = request.json
+    classQuery = Classes.query.filter_by(id=info['classid']).first()
+    repo = info['repo']
+    success = "false";
+    message = ""
+    
+    if repo:
+        root_folder = '%s %s' % (repo, datetime.datetime.now()) # generate unique folder name to prevent pull collisions
+        root_folder = os.path.join(app.config['TEMP'], root_folder) # absolute path
+        createDirectory(root_folder)
 
-    root_folder = '%s %s' % (repo, datetime.datetime.now()) # generate unique folder name to prevent pull collisions
-    root_folder = os.path.join(app.config['TEMP'], root_folder) # absolute path
-    createDirectory(root_folder)
+        successLog = [];
+        failedLog = [];
 
-    successLog = [];
-    failedLog = [];
+        if classQuery:
+            studentQuery = Students.query.filter_by(classroom=classQuery).all()
+            for student in studentQuery:
+                student_folder = '%s-%s' % (student.last, student.first)
+                repoResult = cloneRepo( app.config['USERNAME'], app.config['PASSWORD'], app.config['DOMAIN'], student.username, repo, root_folder, student_folder )
+                if repoResult:
+                    successLog.append( "%-20s %-20s" % (student.first, student.last) )
+                else:
+                    failedLog.append( "%-20s %-20s" % (student.first, student.last) )
 
-    if classQuery:
-        studentQuery = Students.query.filter_by(classroom=classQuery).all()
-        for student in studentQuery:
-            student_folder = '%s-%s' % (student.last, student.first)
-            repoResult = cloneRepo( app.config['USERNAME'], app.config['PASSWORD'], app.config['DOMAIN'], student.username, repo, root_folder, student_folder )
-            if repoResult:
-                successLog.append( "%-20s %-20s" % (student.first, student.last) )
-            else:
-                failedLog.append( "%-20s %-20s" % (student.first, student.last) )
+            create_log( root_folder, 'success.log', successLog ) ## generate .log files
+            create_log( root_folder, 'failed.log', failedLog )
 
-    create_log( root_folder, 'success.log', successLog )
-    create_log( root_folder, 'failed.log', failedLog )
+            source = root_folder ## zip contents
+            destination = app.config['ARCHIVE'] / os.path.basename(root_folder)
+            shutil.make_archive( destination, 'zip', os.path.dirname(source), os.path.basename(source) )
 
-    source = root_folder ## zip contents
-    destination = app.config['ARCHIVE'] / os.path.basename(root_folder)
-    shutil.make_archive( destination, 'zip', os.path.dirname(source), os.path.basename(source) )
+            removeDirectory(root_folder) ## delete temp files
+            success = 'true'
+            message = 'zip generated -- success'
+        else:
+            message = 'no students -- failed'
+    else:
+        message = 'input repo name -- failed'
 
-    removeDirectory(root_folder)
 
-    return '{ \"success\": %s, \"message\": \"%s\" }' % ('true', 'testing...');
+    return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message);
