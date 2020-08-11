@@ -5,9 +5,13 @@ const Api = require('../modules/api.js');
 const Log = require('../modules/logger.js');
 
 function File(props) {
+  const [repo, setRepo] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [css, setCss] = useState('');
+  const [cssFocus, setCssFocus] = useState('');
   const [downloading, setDownloading] = useState(false);
   const refTag = useRef(null);
 
@@ -15,7 +19,11 @@ function File(props) {
   /* runs on start
   */
   useEffect( () => {
+    let name = props.FileName.split(" ");
     setName( props.FileName );
+    setRepo( name[0] );
+    setDate( `${name[1]}` );
+    setTime( `${name[2].substring(0, 5)}` );
   }, [])
 
 
@@ -47,12 +55,21 @@ function File(props) {
     Log.append('download in progress... eta: hawaiian time', true)
   }
 
+  const onFocus = () => {
+    setCssFocus('archive-focus');
+  }
+
+  const onBlur = () => {
+    setCssFocus('');
+  }
 
   /* render
   */
   return(
-    <div>
-      <button onClick={!downloading ? (download) : (patience)} className={css}> {name} </button>
+    <div onFocus={onFocus} onMouseEnter={onFocus} onMouseLeave={onBlur}>
+      <button onClick={!downloading ? (download) : (patience)} className={`archive-file-repo ${css} ${cssFocus}`}> {repo} </button>
+      <button onClick={!downloading ? (download) : (patience)} className={`archive-file-date ${css} ${cssFocus}`}> {date} </button>
+      <button onClick={!downloading ? (download) : (patience)} className={`archive-file-time ${css} ${cssFocus}`}> {time} </button>
       <a href={url} ref={refTag} className='display-none' download={name}> {name} </a>)
     </div>
   );

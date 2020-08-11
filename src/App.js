@@ -14,6 +14,7 @@ import './css/App.css';
 import './css/Pages.css';
 import './css/Students.css';
 import './css/Components.css';
+import './css/Archive.css';
 import './css/Cube.scss';
 
 

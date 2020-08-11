@@ -1,0 +1,69 @@
+.archive-file-repo {
+  text-align: left;
+  z-index: 10;
+  color: cyan;
+  width: 50%;
+}
+
+.archive-file-date {
+  color: #aaa;
+  z-index: 1;
+  width: 33%;
+  text-align: right;
+}
+
+.archive-file-time {
+  color: #aaa;
+  width: 17%;
+  text-align: right;
+}
+
+.archive-page h1 {
+  margin-bottom: 15px;
+}
+
+.archive-download-active {
+  color: orange !important;
+  opacity: 0.5;
+}
+
+.archive-focus {
+  background-color: #111;
+}
+
+
+
+@media only screen and (max-width: 1400px) {
+  .archive-file-time {
+    display: none;
+  }
+  .archive-file-date {
+    width: 30%;
+  }
+  .archive-file-repo {
+    width: 70%
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .archive-file-date {
+    width: 33%;
+  }
+  .archive-file-time {
+    width: 17%;
+    display: inline-block;
+  }
+  .archive-file-repo {
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .archive-file-date, .archive-file-time {
+    display: none;
+  }
+  .archive-file-repo {
+    text-align: center;
+    width: 100%;
+  }
+}

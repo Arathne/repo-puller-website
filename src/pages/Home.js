@@ -60,7 +60,7 @@ function Home() {
       </select>
     )
   }
-  /*<option value="0" > Select class: </option>*/
+
   return(
     <div className='home-page'>
       <h1> Home </h1>
@@ -76,7 +76,7 @@ function Home() {
           </div>
           <div className='text-field-div'>
             <h3> Repo :: </h3>
-            <input type='text' name='repo' defaultValue='csci24000_spring2020_A1' onClick={repoClick} className='text-field' />
+            <input type='text' name='repo' defaultValue='csci24000_spring2020_A1' onClick={repoClick} className='text-field font-cyan' />
           </div>
           <div className='text-field-div'>
             <h3> Class :: </h3>
@@ -93,10 +93,5 @@ function Home() {
     </div>
   );
 }
-/*
-<div className='text-field-div'>
-  <h3> Class :: </h3>
-  <input type='text' placeholder='240' name='repo' onClick={repoClick} className='text-field' />
-</div>
-*/
+
 export default Home;

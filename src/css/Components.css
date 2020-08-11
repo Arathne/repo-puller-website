@@ -70,16 +70,14 @@
 }
 
 .terminal h2 {
-  white-space: pre !important;
+  white-space: pre;
 
 }
 
 /* Screen Resize */
 /* 4 Cubes */
 @media only screen and (max-width: 1500px) {
-  .terminal {
 
-  }
 }
 
 /* 3 Cubes */
@@ -97,7 +95,6 @@
   .student-middle {
     display: none;
   }
-
 }
 
 /* 1 Cube */

@@ -274,7 +274,7 @@ def pull():
     info = request.json
     classQuery = Classes.query.filter_by(id=info['classid']).first()
     repo = info['repo']
-    success = "false";
+    success = "false"
     message = ""
 
     if repo:
@@ -309,7 +309,7 @@ def pull():
             socketio.emit('pull-update', '')
             socketio.emit('pull-update', "SUBMITTED: %s :: %s" % (len(successLog), classQuery.name))
             socketio.emit('pull-update', "NO SUBMISSIONS: %s :: %s" % (len(failedLog), classQuery.name))
-            
+
             success = 'true'
             message = 'zip generated -- success'
         else:

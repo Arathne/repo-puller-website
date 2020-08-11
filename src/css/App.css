@@ -81,13 +81,9 @@ h3 {
 button {
   font-family: Arcade;
   font-size: 2.5em;
-  color: #2db5b5;
+  color: orange;
   border: none;
   background-color: transparent;
-}
-
-button:hover {
-  opacity: 0.5;
 }
 
 .form {
@@ -103,7 +99,7 @@ button:hover {
   width: 60%;
   font-family: Arcade;
   font-size: 2.5em;
-  color: white;
+  color: #aaa;
   background-color: transparent;
   text-align: center;
   border: none;
@@ -127,13 +123,17 @@ button:hover {
   margin-left: 3%;
 }
 
+.font-cyan {
+  color: cyan;
+}
+
 .home-select select {
   background-color: transparent;
   color: cyan;
   font-family: Arcade;
   font-size: 2.5em;
   border: 0;
-  border-bottom: 1px solid pink;
+  border-bottom: 1px solid white;
   -moz-appearance: none;
   -webkit-appearance: none;
 }
