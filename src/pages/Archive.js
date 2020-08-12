@@ -24,6 +24,7 @@ function Archive() {
     <div className='archive-page'>
       <h1> Archive </h1>
       <RenderFiles />
+      <div className='page-bottom'> </div>
     </div>
   );
 }

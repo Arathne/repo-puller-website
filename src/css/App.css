@@ -78,6 +78,13 @@ h3 {
   display: inline-block;
 }
 
+h4 {
+  font-family: Arcade;
+  font-size: 2.3em;
+  color: #aaa;
+  display: inline-block;
+}
+
 button {
   font-family: Arcade;
   font-size: 2.5em;

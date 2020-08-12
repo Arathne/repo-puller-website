@@ -23,6 +23,9 @@ app.config['ROOT'] = pathlib.Path(__file__).parent.absolute()
 app.config['ARCHIVE'] = app.config['ROOT'] / 'archive'
 app.config['TEMP'] = app.config['ROOT'] / 'temp'
 
+createDirectory( app.config['ARCHIVE'] )
+createDirectory( app.config['TEMP'] )
+
 
 ## GITHUB AUTHENTICATION
 app.config['USERNAME'] = '260da436e05e0cf2db41c44e386b0d8b6b16b35f' ## dont bother, already regenerated

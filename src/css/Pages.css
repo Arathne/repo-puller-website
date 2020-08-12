@@ -1,1 +1,55 @@
+.readme-page {}
 
+.readme-page-wrapper {
+  display: inline-block;
+  margin: 10px;
+  text-align: left;
+  width: 100%;
+}
+
+.readme-page-info {
+  color: #aaa;
+  vertical-align: top;
+  display: inline-block;
+  width: 90%;
+  margin-left: 5px;
+}
+
+.readme-page-hash {
+  color: cyan;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.readme-center {
+  text-align: center;
+}
+
+.readme-page-top {
+  text-align: left;
+  display: inline-block;
+  width: 400px;
+}
+
+.readme-page-top-left {
+  display: inline-block;
+  text-align: right;
+}
+
+.readme-page-top-right {
+  margin-left: 30px;
+  display: inline-block;
+  text-align: left;
+}
+
+.readme-page-top-right h3 {
+  color: cyan;
+}
+
+.readme-page-info-wrapper {
+  margin-top: 15px;
+}
+
+.page-bottom {
+  height: 200px;
+}

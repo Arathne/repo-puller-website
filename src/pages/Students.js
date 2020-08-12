@@ -46,6 +46,8 @@ function Students() {
         })}
         </Slider>
       </div>
+
+      <div className='page-bottom'> </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ venv
 
 # testing
 /coverage
+/api/archive
 
 # production
 /build
