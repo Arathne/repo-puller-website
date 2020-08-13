@@ -77,11 +77,26 @@ function updateClass( classid, className ) {
 }
 
 
-/* deletes student
+/* deletes single student
 */
 function deleteStudent( id ) {
   const student = { id: id }
   return callApiPost('/api/students/delete', student);
+}
+
+
+/* deletes all students from class
+*/
+function clearClass( classid ) {
+  const info = { classid: classid }
+  return callApiPost('/api/class/clear', info);
+}
+
+
+/* deletes all students from class
+*/
+function clearArchive( classid ) {
+  return callApi('/api/zip/clear');
 }
 
 
@@ -138,5 +153,7 @@ module.exports = {
   downloadFile,
   updateStudent,
   deleteStudent,
-  updateClass,
+  clearClass,
+  clearArchive,
+  updateClass
 };

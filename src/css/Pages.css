@@ -50,6 +50,10 @@
   margin-top: 15px;
 }
 
+.readme-page-secret {
+  color: black;
+}
+
 .page-bottom {
   height: 200px;
 }

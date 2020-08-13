@@ -18,10 +18,6 @@
   text-align: right;
 }
 
-.archive-page h1 {
-  margin-bottom: 15px;
-}
-
 .archive-download-active {
   color: orange !important;
   opacity: 0.5;

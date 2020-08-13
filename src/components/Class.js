@@ -47,6 +47,28 @@ function Class( props ) {
   }
 
 
+  /* handle clearing students from class
+  */
+  let x = 1;
+  const handleClear = () => {
+    if( x == 1 ) {
+      Log.append(`press again to clear all students from ${className}`, true);
+    }
+    else if( x == 2 ) {
+      Api.clearClass( classID ).then( json => {
+        if( json.success )
+          props.RefreshFunc();
+        
+        Log.append(json.message, true);
+      })
+    }
+
+    x++;
+    if( x > 2 )
+      x = 1;
+  }
+
+
   /* runs when json file is updated
   */
   useEffect( () => {
@@ -78,6 +100,7 @@ function Class( props ) {
       <div className="student-class-buttons">
         <button onClick={handleAdd}> + </button>
         <button onClick={handleRefresh}> o </button>
+        <button onClick={handleClear}> x </button>
       </div>
 
       <Students />

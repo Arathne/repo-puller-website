@@ -33,19 +33,24 @@ function Readme() {
         </div>
         <div className='readme-page-wrapper'>
           <h3 className='readme-page-hash'>#</h3>
-          <h4 className='readme-page-info'> moss is not included because it's very unstable and inconsistent </h4>
+          <h4 className='readme-page-info'> moss is not included because it's very unstable and inconsistent (see scripts.zip) </h4>
         </div>
         <div className='readme-page-wrapper'>
           <h3 className='readme-page-hash'>#</h3>
-          <h4 className='readme-page-info'> github api key will only be changed manually from the back-end since the server is currently insecure with http </h4>
+          <h4 className='readme-page-info'> github API key/username/password will only be changed manually from the back-end since the server is currently insecure with http </h4>
         </div>
         <div className='readme-page-wrapper'>
           <h3 className='readme-page-hash'>#</h3>
-          <h4 className='readme-page-info'> download scripts.py in archive page for instructions to pull repositories locally </h4>
+          <h4 className='readme-page-info'> to add a class you need to update the database from the back-end. This tool was only intended for 230 and 240 </h4>
+        </div>
+        <div className='readme-page-wrapper'>
+          <h3 className='readme-page-hash'>#</h3>
+          <h4 className='readme-page-info'> download scripts.zip in archive page for instructions to pull repositories locally </h4>
         </div>
         <div className='readme-page-wrapper'>
           <h3 className='readme-page-hash'>#</h3>
           <h4 className='readme-page-info'> good luck! </h4>
+          <h4 className='readme-page-secret'> you will need it =) </h4>
         </div>
       </div>
 

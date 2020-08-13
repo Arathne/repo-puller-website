@@ -6,8 +6,8 @@ const Log = require('../modules/logger.js');
 
 function File(props) {
   const [repo, setRepo] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [date, setDate] = useState('2020-08-13');
+  const [time, setTime] = useState('4:20');
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [css, setCss] = useState('');
@@ -22,8 +22,10 @@ function File(props) {
     let name = props.FileName.split(" ");
     setName( props.FileName );
     setRepo( name[0] );
-    setDate( `${name[1]}` );
-    setTime( `${name[2].substring(0, 5)}` );
+    if( name.length > 1 )
+      setDate( `${name[1]}` );
+    if( name.length > 2 )
+      setTime( `${name[2].substring(0, 5)}` );
   }, [])
 
 

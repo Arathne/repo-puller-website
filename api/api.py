@@ -206,7 +206,7 @@ def update_student():
 
 
 
-## deletes student by primary key
+## deletes single student by primary key
 ##
 @app.route('/api/students/delete', methods = ['POST'])
 def delete_student():
@@ -242,6 +242,18 @@ def update_class():
     return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message);
 
 
+## clears students from class
+##
+@app.route('/api/class/clear', methods = ['POST'])
+def clear_class():
+    classInfo = request.json
+    query = Students.query.filter_by( classid=classInfo['classid'] ).delete()
+    db.session.commit()
+
+    return '{ \"success\": %s, \"message\": \"%s\" }' % ('true', 'cleared class -- success');
+
+
+
 
 ## get available files and return their file names
 ##    (only name and not the actual file)
@@ -256,11 +268,23 @@ def get_file_info():
     directory = [x for x in data if x.is_file()]
     for i in range( len(directory) ):
         current = len(directory)-i-1 ## sorted backwards
-        jsonPath += '\"%s\"' % directory[current].name
-        if i < len(directory) - 1:
-            jsonPath += ', '
+        jsonPath += '\"%s\",' % directory[current].name
+    jsonPath += '\"scripts.zip\"'
 
     return '[ %s ]' % jsonPath
+
+
+## get available files and return their file names
+##    (only name and not the actual file)
+##
+@app.route('/api/zip/clear')
+def clear_archive():
+    data = app.config['ARCHIVE'].glob('*')
+    directory = [x for x in data if x.is_file()]
+    for file in directory:
+        file.unlink()
+
+    return '{ \"success\": %s, \"message\": \"%s\" }' % ('true', 'cleared archive -- success');
 
 
 ## sends file to client
@@ -268,6 +292,10 @@ def get_file_info():
 @app.route('/api/zip/download', methods = ['POST'])
 def get_file():
     info = request.json
+
+    if info['fileName'] == 'scripts.zip':
+        return send_from_directory(app.config['ROOT'], filename=info['fileName'], as_attachment=True)
+
     return send_from_directory(app.config['ARCHIVE'], filename=info['fileName'], as_attachment=True)
 
 
