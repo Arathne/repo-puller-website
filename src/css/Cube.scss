@@ -94,6 +94,10 @@
   transition: transform 0.5s;
 }
 
+.scene:hover .cube-title {
+  display: block;
+}
+
 .scene:hover .cube {
   animation-play-state: paused;
 }
@@ -117,9 +121,4 @@
 /* animations */
 @keyframes rotate {
   100% { transform: rotate3d(random(1),random(1),random(1),360deg) }
-}
-
-@keyframes stalling {
-  0% { transform: rotateY(-20deg) }
-  100% { transform: rotateY(340deg); }
 }

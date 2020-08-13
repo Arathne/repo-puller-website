@@ -58,10 +58,10 @@ function Nav() {
         dots={true}
         slidesToScroll={1}
       >
-        <NavLink to='/' activeClassName='nav-active' exact> <Cube /> </NavLink>
-        <NavLink to='/students' exact> <Cube /> </NavLink>
-        <NavLink to='/archive' exact> <Cube /> </NavLink>
-        <NavLink to='/readme' exact> <Cube /> </NavLink>
+        <NavLink to='/' activeClassName='nav-active' exact> <Cube name='home' /> </NavLink>
+        <NavLink to='/students' exact> <Cube name='students' /> </NavLink>
+        <NavLink to='/archive' exact> <Cube name='archive' /> </NavLink>
+        <NavLink to='/readme' exact> <Cube name='readme' /> </NavLink>
       </Slider>
 
       <Slider

@@ -90,23 +90,24 @@ def createDirectory( path ):
 #    from script-3
 #
 def cloneRepo( username, password, domain, student, repo, path, dirName ):
+    success = True
+    repo = student + '/' + repo + '.git'
+    dir = os.path.join( path, dirName )
 
-	success = True
-	repo = student + '/' + repo + '.git'
-	dir = os.path.join( path, dirName )
-	createDirectory( dir )
+    if os.path.isdir(dir):
+        return True
 
-	url = "https://%s:%s@%s/%s" % ( username, password, domain, repo )
+    createDirectory( dir )
 
-	try:
-		Repo.clone_from( url, dir, branch='master' )
-		#print( "*** SUCCESS ***    " + student )
-	except:
-		removeDirectory( dir )
-		success = False
-		#print( "*** FAILED  ***    " + student )
+    url = "https://%s:%s@%s/%s" % ( username, password, domain, repo )
 
-	return success
+    try:
+        Repo.clone_from( url, dir, branch='master' )
+    except:
+        removeDirectory( dir )
+        success = False
+
+    return success
 
 
 ## creates a log file based on array of strings

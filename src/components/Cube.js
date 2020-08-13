@@ -2,9 +2,10 @@
 
 import React from 'react';
 
-function Cube() {
+function Cube(props) {
   return(
     <div className='scene'>
+      <div className='cube-title'> <h3> {props.name} </h3> </div>
       <div className='cube-face cube-inner-circle'>
         <img src={'/img/gear.png'} className="cube-inner-static-logo" alt="logo" />
       </div>

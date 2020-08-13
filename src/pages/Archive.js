@@ -24,10 +24,10 @@ function Archive() {
 
   let x = 1;
   const handleClear = () => {
-    if( x == 1 ) {
+    if( x === 1 ) {
       Log.append('press again to clear archive', true);
     }
-    else if( x == 2 ) {
+    else if( x === 2 ) {
       Api.clearArchive().then( json => {
         if( json.success )
           refresh()

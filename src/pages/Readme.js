@@ -37,6 +37,10 @@ function Readme() {
         </div>
         <div className='readme-page-wrapper'>
           <h3 className='readme-page-hash'>#</h3>
+          <h4 className='readme-page-info'> avoid marking submissions at midnight unless you want emails at 1:00am </h4>
+        </div>
+        <div className='readme-page-wrapper'>
+          <h3 className='readme-page-hash'>#</h3>
           <h4 className='readme-page-info'> github API key/username/password will only be changed manually from the back-end since the server is currently insecure with http </h4>
         </div>
         <div className='readme-page-wrapper'>

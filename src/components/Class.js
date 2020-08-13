@@ -51,14 +51,14 @@ function Class( props ) {
   */
   let x = 1;
   const handleClear = () => {
-    if( x == 1 ) {
+    if( x === 1 ) {
       Log.append(`press again to clear all students from ${className}`, true);
     }
-    else if( x == 2 ) {
+    else if( x === 2 ) {
       Api.clearClass( classID ).then( json => {
         if( json.success )
           props.RefreshFunc();
-        
+
         Log.append(json.message, true);
       })
     }
