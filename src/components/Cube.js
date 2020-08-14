@@ -7,11 +7,11 @@ function Cube(props) {
     <div className='scene'>
       <div className='cube-title'> <h3> {props.name} </h3> </div>
       <div className='cube-face cube-inner-circle'>
-        <img src={'/img/gear.png'} className="cube-inner-static-logo" alt="logo" />
+        <img src={`/img/${props.image}`} className="cube-inner-static-logo" alt="logo" />
       </div>
       <div className='cube'>
         <div className='cube-face cube-inner-circle cube-inner-rotating-circle'>
-          <img src={'/img/gear.png'} className="cube-inner-rotating-logo" alt="logo" />
+          <img src={`/img/${props.image}`} className="cube-inner-rotating-logo" alt="logo" />
         </div>
         <div className='cube-face cube-face-front'>  </div>
         <div className='cube-face cube-face-back'>   </div>
