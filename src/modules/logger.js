@@ -5,9 +5,12 @@ const socket = io();
 const logEvent = new Event('logger');
 let log = [];
 let lastLine = '';
+let showRepoUpdate = false;
+
 
 socket.on('pull-update', (msg) => {
-  append(msg)
+  if( showRepoUpdate )
+    append(msg)
 })
 
 
@@ -39,9 +42,18 @@ function last() {
 }
 
 
+/* turn on socket-io
+*/
+function live( bool ) {
+  showRepoUpdate = bool;
+}
 
+
+/* public functions
+*/
 module.exports = {
   append,
   content,
+  live,
   last
 };

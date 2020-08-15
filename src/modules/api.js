@@ -17,6 +17,9 @@ const defaultPost = {
   body: JSON.stringify('')
 }
 
+let USERNAME = '';
+let PASSWORD = '';
+
 
 /* fetch api at specified route
  *    compatible with both get and post request methods
@@ -39,10 +42,24 @@ function callApiPost( route, request ) {
 }
 
 
+/* check to see if username and password are valid
+*/
+function signIn(username, password) {
+  const client = {
+    auth_username: username,
+    auth_password: password
+  }
+  return callApiPost('/api/sign-in', client)
+}
+
 /* all information of accessible classes
 */
 function getClassInfo() {
-  return callApi('/api/info/classes');
+  const client = {
+    auth_username: USERNAME,
+    auth_password: PASSWORD
+  }
+  return callApiPost('/api/info/classes', client);
 }
 
 
@@ -60,7 +77,9 @@ function updateStudent( id, classid, newFirstName, newLastName, newUserName ) {
     classid: classid,
     firstName: newFirstName,
     lastName: newLastName,
-    userName: newUserName
+    userName: newUserName,
+    auth_username: USERNAME,
+    auth_password: PASSWORD
   }
   return callApiPost('/api/students/update', student)
 }
@@ -71,7 +90,9 @@ function updateStudent( id, classid, newFirstName, newLastName, newUserName ) {
 function updateClass( classid, className ) {
   const classObj = {
     classid: classid,
-    classname: className
+    classname: className,
+    auth_username: USERNAME,
+    auth_password: PASSWORD
   }
   return callApiPost('/api/class/update', classObj)
 }
@@ -80,7 +101,11 @@ function updateClass( classid, className ) {
 /* deletes single student
 */
 function deleteStudent( id ) {
-  const student = { id: id }
+  const student = {
+    id: id ,
+    auth_username: USERNAME,
+    auth_password: PASSWORD
+  }
   return callApiPost('/api/students/delete', student);
 }
 
@@ -88,7 +113,11 @@ function deleteStudent( id ) {
 /* deletes all students from class
 */
 function clearClass( classid ) {
-  const info = { classid: classid }
+  const info = {
+    classid: classid,
+    auth_username: USERNAME,
+    auth_password: PASSWORD
+  }
   return callApiPost('/api/class/clear', info);
 }
 
@@ -96,7 +125,11 @@ function clearClass( classid ) {
 /* deletes all students from class
 */
 function clearArchive( classid ) {
-  return callApi('/api/zip/clear');
+  const info = {
+    auth_username: USERNAME,
+    auth_password: PASSWORD
+  }
+  return callApiPost('/api/zip/clear', info);
 }
 
 
@@ -105,7 +138,9 @@ function clearArchive( classid ) {
 function generateZip( classid, repo ) {
   const info = {
     classid: classid,
-    repo: repo
+    repo: repo,
+    auth_username: USERNAME,
+    auth_password: PASSWORD
   }
   return callApiPost('/api/zip/generate', info);
 }
@@ -114,7 +149,11 @@ function generateZip( classid, repo ) {
 /* get available files
 */
 function getAvailableFiles() {
-  const info = { id: 10 }
+  const info = {
+    id: 10,
+    auth_username: USERNAME,
+    auth_password: PASSWORD
+  }
   return callApiPost('/api/zip', info);
 }
 
@@ -124,7 +163,12 @@ function getAvailableFiles() {
  *    returns a url of file location
 */
 function downloadFile( filename ) {
-  const info = { fileName: filename }
+  const info = {
+    fileName: filename,
+    auth_username: USERNAME,
+    auth_password: PASSWORD
+  }
+
   const post = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -145,7 +189,18 @@ function downloadFile( filename ) {
 }
 
 
+/* set username and password used for accessing api
+*/
+function auth(username, password) {
+  USERNAME = username;
+  PASSWORD = password;
+}
+
+/* public functions
+*/
 module.exports = {
+  signIn,
+  auth,
   getClassInfo,
   getGeneralInfo,
   generateZip,

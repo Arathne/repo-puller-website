@@ -24,9 +24,12 @@ app.config['ARCHIVE'] = app.config['ROOT'] / 'archive'
 app.config['TEMP'] = app.config['ROOT'] / 'temp'
 
 
+## USER AUTHENTICATiON
+app.config['USERNAME'] = 'abc';
+app.config['PASSWORD'] = '123';
+
 ## GITHUB AUTHENTICATION
-app.config['USERNAME'] = '260da436e05e0cf2db41c44e386b0d8b6b16b35f' ## dont bother, already regenerated
-app.config['PASSWORD'] = 'x-oauth-basic'
+app.config['API_KEY'] = '260da436e05e0cf2db41c44e386b0d8b6b16b35f' ## dont bother, already regenerated
 app.config['DOMAIN'] = 'github.iu.edu'
 
 
@@ -120,6 +123,16 @@ def create_log(path, filename, stringArray):
         file.write(all)
 
 
+## authentication
+##
+def authenticate(username, password):
+    valid = False
+    if username == app.config['USERNAME']:
+        if password == app.config['PASSWORD']:
+            valid = True
+    return valid
+
+
 ## CREATE FOLDERS
 createDirectory( app.config['ARCHIVE'] )
 createDirectory( app.config['TEMP'] )
@@ -133,10 +146,28 @@ def index():
     return app.send_static_file('index.html')
 
 
+## sign-in
+@app.route('/api/sign-in', methods = ['POST'])
+def signIn():
+    client = request.json
+    success = 'false'
+    message = 'username/password incorrect'
+
+    if authenticate(client['auth_username'], client['auth_password']):
+        message = 'log in -- success'
+        success = 'true'
+
+    return '{ \"success\": %s, \"message\": \"%s\" }' % (success, message)
+
+
 ## returns a json file with information of every class
 ##
-@app.route('/api/info/classes', methods = ['GET'])
+@app.route('/api/info/classes', methods = ['POST'])
 def classes_to_json():
+    client = request.json
+    if not(authenticate(client['auth_username'], client['auth_password'])):
+        return '[]'
+
     studentJSON = ''
     classesList = Classes.query.all()
     for i in range( len(classesList) ):
@@ -152,7 +183,7 @@ def classes_to_json():
 ##
 @app.route('/api/info/general', methods = ['GET'])
 def general_info():
-    api = app.config['USERNAME'][:10]
+    api = app.config['API_KEY'][:10]
     api += '*' * 10
 
     apiJSON = "\"api\": \"%s\"" % api
@@ -181,6 +212,9 @@ def update_student():
     success = "false"
     message = ""
     student = request.json
+
+    if not(authenticate(student['auth_username'], student['auth_password'])):
+        return '{ \"success\": %s, \"message\": \"%s\" }' % ('false', 'authentication -- failed')
 
     try:
         query = Students.query.filter_by( id=student['id'] ).first()
@@ -212,6 +246,10 @@ def update_student():
 @app.route('/api/students/delete', methods = ['POST'])
 def delete_student():
     student = request.json
+
+    if not(authenticate(student['auth_username'], student['auth_password'])):
+        return '{ \"success\": %s, \"message\": \"%s\" }' % ('false', 'authentication -- failed')
+
     Students.query.filter_by( id=student['id'] ).delete()
     db.session.commit()
 
@@ -227,6 +265,9 @@ def update_class():
     classInfo = request.json
     message = ""
     success = "false"
+
+    if not(authenticate(classInfo['auth_username'], classInfo['auth_password'])):
+        return '{ \"success\": %s, \"message\": \"%s\" }' % ('false', 'authentication -- failed')
 
     try:
         query = Classes.query.filter_by( id=classInfo['classid'] ).first()
@@ -264,6 +305,9 @@ def get_file_info():
     info = request.json
     jsonPath = ''
 
+    if not(authenticate(info['auth_username'], info['auth_password'])):
+        return '[]'
+
     data = app.config['ARCHIVE'].glob('*')
     data = sorted(data, key=os.path.getmtime)
     directory = [x for x in data if x.is_file()]
@@ -278,8 +322,12 @@ def get_file_info():
 ## get available files and return their file names
 ##    (only name and not the actual file)
 ##
-@app.route('/api/zip/clear')
+@app.route('/api/zip/clear', methods = ['POST'])
 def clear_archive():
+    info = request.json
+    if not(authenticate(info['auth_username'], info['auth_password'])):
+        return '{ \"success\": %s, \"message\": \"%s\" }' % ('false', 'authentication -- failed')
+
     data = app.config['ARCHIVE'].glob('*')
     directory = [x for x in data if x.is_file()]
     for file in directory:
@@ -293,6 +341,8 @@ def clear_archive():
 @app.route('/api/zip/download', methods = ['POST'])
 def get_file():
     info = request.json
+    if not(authenticate(info['auth_username'], info['auth_password'])):
+        return ''
 
     if info['fileName'] == 'scripts.zip':
         return send_from_directory(app.config['ROOT'], filename=info['fileName'], as_attachment=True)
@@ -305,6 +355,9 @@ def get_file():
 @app.route('/api/zip/generate', methods = ['POST'])
 def pull():
     info = request.json
+    if not(authenticate(info['auth_username'], info['auth_password'])):
+        return '{ \"success\": %s, \"message\": \"%s\" }' % ('false', 'authentication -- failed')
+
     classQuery = Classes.query.filter_by(id=info['classid']).first()
     repo = info['repo']
     success = "false"
@@ -322,7 +375,7 @@ def pull():
             studentQuery = Students.query.filter_by(classroom=classQuery).all()
             for student in studentQuery:
                 student_folder = '%s-%s' % (student.last, student.first)
-                repoResult = cloneRepo( app.config['USERNAME'], app.config['PASSWORD'], app.config['DOMAIN'], student.username, repo, root_folder, student_folder )
+                repoResult = cloneRepo( app.config['API_KEY'], 'x-oauth-basic', app.config['DOMAIN'], student.username, repo, root_folder, student_folder )
                 if repoResult:
                     successLog.append( "%-20s %-20s" % (student.first, student.last) )
                     socketio.emit('pull-update', "SUCCESS :: %s %s :: %s" % (student.first, student.last, classQuery.name))

@@ -24,7 +24,7 @@ function Home() {
 
   const handleSubmit = (event) => {
     Log.append('Sending Request...', true);;
-    Log.append('Pulling... takes about 2 min', true);
+    Log.append('pulling... takes about 2 min');
     Log.append('');
 
     setButtonDisplay('none');
@@ -36,7 +36,8 @@ function Home() {
     if( classid ) {
       Api.generateZip(classid, repo).then( json => {
         Log.append(json.message, true);
-        Log.append('go to Archive page to download', true);
+        if( json.success )
+          Log.append('go to Archive page to download', true);
         setButtonDisplay('inline-block');
       })
     }
@@ -76,7 +77,7 @@ function Home() {
           </div>
           <div className='text-field-div'>
             <h3> Repo :: </h3>
-            <input type='text' name='repo' defaultValue='csci24000_spring2020_A1' onClick={repoClick} className='text-field font-cyan' />
+            <input autocomplete="off" type='text' name='repo' defaultValue='csci24000_spring2020_A1' onClick={repoClick} className='text-field font-cyan' />
           </div>
           <div className='text-field-div'>
             <h3> Class :: </h3>
