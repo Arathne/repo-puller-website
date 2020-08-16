@@ -98,9 +98,9 @@ function Class( props ) {
       </form>
 
       <div className="student-class-buttons">
-        <button onClick={handleAdd}> + </button>
-        <button onClick={handleRefresh}> o </button>
-        <button onClick={handleClear}> x </button>
+        <button onClick={handleAdd} className='option'> + </button>
+        <button onClick={handleRefresh} className='option'> o </button>
+        <button onClick={handleClear} className='option'> x </button>
       </div>
 
       <Students />

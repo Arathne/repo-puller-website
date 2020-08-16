@@ -55,8 +55,8 @@ function Archive() {
       <h1> Archive </h1>
 
       <div className="student-class-buttons">
-      <button onClick={handleRefresh}> o </button>
-        <button onClick={handleClear}> x </button>
+        <button onClick={handleRefresh} className='option'> o </button>
+        <button onClick={handleClear} className='option'> x </button>
       </div>
 
       <RenderFiles />

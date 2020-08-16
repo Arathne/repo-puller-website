@@ -88,11 +88,18 @@ h4 {
 }
 
 button {
+  pointer-events: auto;
+  outline: 0;
   font-family: Arcade;
   font-size: 2.5em;
   color: orange;
   border: none;
   background-color: transparent;
+}
+
+.option:hover {
+  transform: rotate(20deg) scale(1.4);
+  animation: pulse 5s linear infinite;
 }
 
 .form {

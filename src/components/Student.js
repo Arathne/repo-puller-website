@@ -76,7 +76,7 @@ function Student( props ) {
           <button type="submit"></button>
         </div>
       </form>
-      <button onClick={handleRemove} className={(props.New) ? ('student-button-remove student-button-remove-new') : ('student-button-remove')}> - </button>
+      <button onClick={handleRemove} className={(props.New) ? ('student-button-remove student-button-remove-new option') : ('student-button-remove option')}> - </button>
     </div>
   );
 }
