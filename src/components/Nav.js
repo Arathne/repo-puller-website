@@ -45,6 +45,7 @@ function Nav() {
   */
   return (
     <div className='nav-root'>
+      {/* always on top navigation bar */}
       <Slider
         speed={500}
         centerMode={true}
@@ -64,6 +65,8 @@ function Nav() {
         <NavLink to='/readme' exact> <Cube name='readme' image='readme.png' /> </NavLink>
       </Slider>
 
+
+      {/* hidden nav bar so that the page knowns how far down to go */}
       <Slider
         speed={500}
         centerMode={true}

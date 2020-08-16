@@ -1,13 +1,19 @@
+/* readme page */
+
 import React, {useEffect} from 'react';
 const Log = require('../modules/logger.js');
 
 function Readme() {
 
+  /* runs on start
+  */
   useEffect( () => {
     Log.append('Readme Page...', true);
   }, [] );
 
 
+  /* render
+  */
   return(
     <div className='readme-page'>
       <h1> Readme </h1>

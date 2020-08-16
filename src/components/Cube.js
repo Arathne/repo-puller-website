@@ -3,6 +3,9 @@
 import React from 'react';
 
 function Cube(props) {
+
+  /* render
+  */
   return(
     <div className='scene'>
       <div className='cube-title'> <h3> {props.name} </h3> </div>

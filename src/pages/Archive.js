@@ -1,27 +1,42 @@
+/* page to download files */
+
 import React, {useEffect, useState} from 'react';
 import File from '../components/File.js';
 const Log = require('../modules/logger.js');
 const Api = require('../modules/api.js');
 
+
 function Archive() {
   const [files, setFiles] = useState([]);
 
+
+  /* runs on start
+  */
   useEffect( () => {
     Log.append('Archive...', true);
     refresh();
   }, [])
 
+
+  /* refresh page
+  */
   const refresh = () => {
     Api.getAvailableFiles().then( array => {
       setFiles( [...array] );
     })
   }
 
+
+  /* add message to terminal and refreshes page
+  */
   const handleRefresh = () => {
     refresh()
     Log.append('refreshing page -- success', true)
   }
 
+
+  /* removes all files when button is double pressed
+  */
   let x = 1;
   const handleClear = () => {
     if( x === 1 ) {
@@ -42,6 +57,8 @@ function Archive() {
   }
 
 
+  /* render each file from array
+  */
   const RenderFiles = () => {
     return (
       files.map( (file, index) => {
@@ -50,6 +67,8 @@ function Archive() {
   }
 
 
+  /* render
+  */
   return(
     <div className='archive-page'>
       <h1> Archive </h1>

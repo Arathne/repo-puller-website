@@ -1,27 +1,33 @@
+/* page to pull repositories */
+
 import React, {useState, useEffect} from 'react';
 const Log = require('../modules/logger.js')
 const Api = require('../modules/api.js')
+
 
 function Home() {
   const [buttonDisplay, setButtonDisplay] = useState('inline-block');
   const [api, setApi] = useState('');
   const [classes, setClasses] = useState([]);
 
+
+  /* displays info when field is clicked
+  */
   function domainClick() {
     Log.append("domain that will be searched", true);
   }
-
   function apiClick() {
     Log.append('API key is required to prevent getting', true);
     Log.append('locked out of iupui account');
   }
-
   function repoClick() {
     Log.append('name of the repository that will be', true)
     Log.append('downloaded from each of the students');
   }
 
 
+  /* pulls repositories on submit
+  */
   const handleSubmit = (event) => {
     Log.append('Sending Request...', true);;
     Log.append('pulling... takes about 2 min');
@@ -38,11 +44,15 @@ function Home() {
         Log.append(json.message, true);
         if( json.success )
           Log.append('go to Archive page to download', true);
+
         setButtonDisplay('inline-block');
       })
     }
   }
 
+
+  /* runs on start
+  */
   useEffect( () => {
     Log.append('Home...', true);
 
@@ -52,6 +62,9 @@ function Home() {
     })
   }, [] );
 
+
+  /* option to choose available classes
+  */
   const RenderClasses = () => {
     return (
       <select>
@@ -62,6 +75,9 @@ function Home() {
     )
   }
 
+
+  /* render
+  */
   return(
     <div className='home-page'>
       <h1> Home </h1>
@@ -87,9 +103,7 @@ function Home() {
           </div>
         </div>
 
-        <div>
-          <button className='button' style={{display: buttonDisplay}}> SEND REQUEST </button>
-        </div>
+        <div> <button className='button' style={{display: buttonDisplay}}> SEND REQUEST </button> </div>
       </form>
     </div>
   );

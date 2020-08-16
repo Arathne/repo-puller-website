@@ -51,19 +51,26 @@ function File(props) {
   }
 
 
-  /* runs when download in progress
+  /* prevents user from downloading same file multiple times
   */
   const patience = () => {
     Log.append('download in progress... eta: hawaiian time', true)
   }
 
+
+  /* change color when download in progress
+  */
   const onFocus = () => {
     setCssFocus('archive-focus');
   }
 
+
+  /* change back to normal
+  */
   const onBlur = () => {
     setCssFocus('');
   }
+
 
   /* render
   */

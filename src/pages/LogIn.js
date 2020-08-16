@@ -1,8 +1,14 @@
+/* sign in page that always shows at start */
+
 import React from 'react';
 const Log = require('../modules/logger.js');
 const Api = require('../modules/api.js')
 
+
 function LogIn(props) {
+
+  /* authenticate and exit page once successful
+  */
   const handleSubmit = (event) => {
     event.preventDefault();
     Log.append('Authenticating...', true);
@@ -12,13 +18,16 @@ function LogIn(props) {
     Api.signIn(username, password).then( json => {
       Log.append( json.message );
       if( json.success ) {
-        Api.auth(username, password)
+        Api.auth(username, password);
         props.showPage(true);
         Log.live(true);
       }
     })
   }
 
+
+  /* render
+  */
   return (
     <div className='home-page'>
       <h1> Sign In </h1>
