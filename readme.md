@@ -1,15 +1,15 @@
-## Website to pull repositories for lots of students
+# Website to pull repositories for lots of students
 #### Reactjs, Python/Flask, SQLAlchemy
 #### check png images to see what it looks like
 
-### Pages
+## Pages
 #### login
 #### home
 #### students
 #### archive
 #### readme
 
-### Features
+## Features
 #### unique feel/look
 #### 3D cubes as navigation bar
 #### downloads student repositories and zips them
